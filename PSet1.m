@@ -1,5 +1,9 @@
 clear all
 close all
+set(0,'DefaultLineLineWidth',1.5)
+set(0,'DefaultLineMarkerSize',15)
+set(0,'DefaultAxesFontSize',22)
+set(0,'DefaultTextFontSize',26)
 %% Problem Set 1 Problem 9
 constants
 %% Initial Conditions
@@ -24,7 +28,8 @@ state_sc_earth = [r; v; mu1];
 
 tstart = 0;
 tint = 25*omega;
-tend = 3600*24*176.9228*omega; % convert to nondimensional time
+% tend = 3600*24*176.9228*omega; % convert to nondimensional time
+tend = 3600*24*365*omega; % convert to nondimensional time
 
 options = odeset('RelTol', 1e-3, 'AbsTol', 1e-6); 
 [t_out, y_out] = ode113(@orbit_prop, [tstart:tint:tend]', state_sc_earth, options); 

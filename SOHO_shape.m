@@ -1,6 +1,11 @@
 %% Satellite Generator
 close all
 clear all
+set(0,'DefaultLineLineWidth',1.5)
+set(0,'DefaultLineMarkerSize',15)
+set(0,'DefaultAxesFontSize',22)
+set(0,'DefaultTextFontSize',26)
+
 
 %% Geometry Parameters
 rect.b = 1.85;

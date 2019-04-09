@@ -21,9 +21,10 @@ fig = figure();
 Rectf1 = vert2rect([0,0], [rectw, rectb], 1, [recth+baseh -rectw/2 -rectb/2]);
 fill3(Rectf1(:,1),Rectf1(:,2),Rectf1(:,3),'k','FaceAlpha',0.5,'HandleVisibility','off')
 hold on
-xlabel('x')
-ylabel('y')
-zlabel('z')
+xlabel('x, m')
+ylabel('y, m')
+zlabel('z, m')
+grid on
 Rectf2 = vert2rect([0,0], [recth, rectb], 2, [baseh rectw/2 -rectb/2]);
 fill3(Rectf2(:,1),Rectf2(:,2),Rectf2(:,3),'k','FaceAlpha',0.5,'HandleVisibility','off')
 
@@ -76,10 +77,10 @@ fill3(SP12(:,1),SP12(:,2),SP12(:,3),'c','FaceAlpha',0.5,'HandleVisibility','off'
 SP13 = vert2rect([0,0], [sph, spb], 2, [0 basew/2+spw -baseb/2]);
 fill3(SP13(:,1),SP13(:,2),SP13(:,3),'c','FaceAlpha',0.5,'HandleVisibility','off')
 
-SP14 = vert2rect([0,0], [sph, spb], 3, [0 basew/2 baseb/2]);
+SP14 = vert2rect([0,0], [sph, spw], 3, [0 basew/2 baseb/2]);
 fill3(SP14(:,1),SP14(:,2),SP14(:,3),'c','FaceAlpha',0.5,'HandleVisibility','off')
 
-SP15 = vert2rect([0,0], [sph, spb], 3, [0 basew/2 -baseb/2]);
+SP15 = vert2rect([0,0], [sph, spw], 3, [0 basew/2 -baseb/2]);
 fill3(SP15(:,1),SP15(:,2),SP15(:,3),'c','FaceAlpha',0.5)
 %% Solar Panel #2 5 faces
 SP21 = vert2rect([0,0], [spw, spb], 1, [0 -basew/2-spw -baseb/2]);
@@ -91,16 +92,16 @@ fill3(SP22(:,1),SP22(:,2),SP22(:,3),'c','FaceAlpha',0.5,'HandleVisibility','off'
 SP23 = vert2rect([0,0], [sph, spb], 2, [0 -(basew/2+spw) -baseb/2]);
 fill3(SP23(:,1),SP23(:,2),SP23(:,3),'c','FaceAlpha',0.5,'HandleVisibility','off')
 
-SP24 = vert2rect([0,0], [sph, spb], 3, [0 -basew/2-spw baseb/2]);
+SP24 = vert2rect([0,0], [sph, spw], 3, [0 -basew/2-spw baseb/2]);
 fill3(SP24(:,1),SP24(:,2),SP24(:,3),'c','FaceAlpha',0.5,'HandleVisibility','off')
 
-SP25 = vert2rect([0,0], [sph, spb], 3, [0 -basew/2-spw -baseb/2]);
+SP25 = vert2rect([0,0], [sph, spw], 3, [0 -basew/2-spw -baseb/2]);
 fill3(SP25(:,1),SP25(:,2),SP25(:,3),'c','FaceAlpha',0.5,'HandleVisibility','off')
 
 axis equal
 title('Simplified Geometry of SOHO')
 quiver3(zeros(3,1),zeros(3,1),zeros(3,1),[1;0;0],[0;1;0],[0;0;1],'linewidth',3,'color','r')
-legend('Scientific Payload Section', 'Power, Propulsion, etc', 'Solar Panels','Body Axes')
+legend('Scientific Payload Section', 'Base', 'Solar Panels','Body Axes')
 
 hold off
 
