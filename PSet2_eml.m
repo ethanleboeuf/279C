@@ -6,7 +6,7 @@ close all
 sc = init_sc();
 sc = body_inertia_func(sc);
 I_vec = [sc.I(1,1); sc.I(2,2); sc.I(3,3)];
-w = [15; 1; 1] * pi()/180;
+w = [7; 1; 7] * pi()/180;
 state_init = [w; I_vec];
 %% Calculate Kinetic Energy for Ellipsoids
 Lvec = sc.I * w;
