@@ -1,4 +1,10 @@
 function [sc, fig] = sc_normals(sc, fig)
+if isempty(fig)
+    fig = 1;
+    plot_flag = 0;
+else
+    plot_flag = 1;
+end
 fig;
 gcf;
 hold on
@@ -18,20 +24,21 @@ for subsect = subsections'
                     nv(ii) = -1;
                 end
                 sc = setfield(sc,subsect{1},face{1},'normal',nv);
-                
-                if count == 1
-                    quiver3(bce(1), bce(2), bce(3),...
-                        nv(1), nv(2), nv(3),'linewidth'...
-                        , 3,'color','m','DisplayName','Unit Normals')
-                    count = count + 1;
-                else
-                    quiver3(bce(1), bce(2), bce(3),...
-                        nv(1), nv(2), nv(3),'linewidth'...
-                        , 3,'color','m','HandleVisibility','off')
+                if plot_flag == 1
+                    if count == 1
+                        quiver3(bce(1), bce(2), bce(3),...
+                            nv(1), nv(2), nv(3),'linewidth'...
+                            , 3,'color','r','DisplayName','Unit Normals')
+                        count = count + 1;
+                    else
+                        quiver3(bce(1), bce(2), bce(3),...
+                            nv(1), nv(2), nv(3),'linewidth'...
+                            , 3,'color','r','HandleVisibility','off')
+                    end
                 end
-                quiver3(bce(1), bce(2), bce(3),...
-                    nv(1), nv(2), nv(3),'linewidth'...
-                    , 3,'color','m','HandleVisibility','off')
+%                 quiver3(bce(1), bce(2), bce(3),...
+%                     nv(1), nv(2), nv(3),'linewidth'...
+%                     , 3,'color','r','HandleVisibility','off')
                 break
             end
         end
