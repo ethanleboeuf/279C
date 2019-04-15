@@ -8,6 +8,7 @@ syms x y z
 eqn = (I(1,1) - L^2/TwoT)*I(1,1)*x^2 + ...
     (I(2,2) - L^2/TwoT)*I(2,2)*y^2 + ...
     (I(3,3) - L^2/TwoT)*I(3,3)*z^2 == 0;
+
 pol = solve(eqn,z);
 fig = figure();
 f(x,y) = pol(1);
