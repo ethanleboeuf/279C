@@ -24,9 +24,9 @@ wz = w_dot(:,3);
 I = [Ix,0,0;0,Iy,0;0,0,Iz];
 w = [wx,wy,wz]';
 %% Rotational Kinetic Energy & Momentum Ellipsoid - Problem 3
-L = (I*w)';
-for i = 1:length(w)
-   L_mag(i) = norm(L(i,:)); 
+for i = 1:size(w, 2)
+   L = (I*w(:, i))';
+   L_mag(i) = norm(L); 
 end
 T2 = (wx.^2)*Ix + (wy.^2)*Iy + (wz.^2)*Iz; % Rot Kinetic Energy
 L2 = (L_mag).^2; % Momentum
@@ -77,7 +77,7 @@ Iz = w_I(6);
 w_dot = zeros(1,6);
 
 w_dot(1) = -((Iz - Iy)*wy*wz)/Ix;
-w_dot(2) = -((Ix - Iz)*wz*wx)/Ix;
+w_dot(2) = -((Ix - Iz)*wz*wx)/Iy;
 w_dot(3) = -((Iy - Ix)*wx*wy)/Iz;
 
 w_dot = w_dot';

@@ -15,7 +15,7 @@ TwoT = dot(w, Lvec);
 
 %% Simulate Rotation
 tstart = 0;
-tint = .1;
+tint = .5;
 tend = 1000;
 
 options = odeset('RelTol', 1e-5, 'AbsTol', 1e-8); 
