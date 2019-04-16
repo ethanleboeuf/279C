@@ -5,11 +5,11 @@ close all
 %% Initialize Spacecraft
 sc = init_sc();
 sc = body_inertia_func(sc);
-I_vec = [sc.I(1,1); sc.I(2,2); sc.I(3,3)];
+I_vec = [sc.Ip(1,1); sc.Ip(2,2); sc.Ip(3,3)];
 w = [3; 3; 3] * pi()/180;
 state_init = [w; I_vec];
 %% Calculate Kinetic Energy for Ellipsoids
-Lvec = sc.I * w;
+Lvec = sc.Ip * w;
 L = norm(Lvec);
 TwoT = dot(w, Lvec);
 
@@ -41,7 +41,7 @@ omegas = [y_out(:,1) y_out(:,2) y_out(:,3)];
 
 
 %% Plot Ellipsoid and Polhode
-[fig] = polhode_ellipsoid_plots(w, sc.I, y_out(:,1:3));
+% [fig] = polhode_ellipsoid_plots(w, sc.Ip, y_out(:,1:3));
 
 %% Axial - Symmetric
 I_vec(2) = I_vec(1);
@@ -51,7 +51,7 @@ tstart = 0;
 tint = .5;
 tend = 1000; % convert to nondimensional time
 
-options = odeset('RelTol', 1e-5, 'AbsTol', 1e-8); 
+options = odeset('RelTol', 1e-8, 'AbsTol', 1e-10); 
 [t_out, y_out_2] = ode113(@euler_eq, [tstart:tint:tend]', state_init, options); 
 figure()
 scatter3(y_out_2(:,1), y_out_2(:,2), y_out_2(:,3))
@@ -62,7 +62,7 @@ zlabel('z axis')
 title('Axi-Symmetric Motion - Numeric')
 hold off
 
-y_out_3 = axi_sym_euler(t_out, w, sc.I);
+y_out_3 = axi_sym_euler(t_out, w, sc.Ip);
 
 figure()
 scatter3(y_out_3(:,1), y_out_3(:,2), y_out_3(:,3))

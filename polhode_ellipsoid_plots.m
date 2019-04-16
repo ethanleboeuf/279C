@@ -12,8 +12,8 @@ xr_L = sqrt(L^2/I(1,1)^2);
 yr_L = sqrt(L^2/I(2,2)^2);
 zr_L = sqrt(L^2/I(3,3)^2);
 
-[x_ke, y_ke, z_ke] = ellipsoid(0, 0, 0, xr_ke, yr_ke, zr_ke, 100);
-[x_L, y_L, z_L] = ellipsoid(0, 0, 0, xr_L, yr_L, zr_L, 100);
+[x_ke, y_ke, z_ke] = ellipsoid(0, 0, 0, xr_ke, yr_ke, zr_ke, 1000);
+[x_L, y_L, z_L] = ellipsoid(0, 0, 0, xr_L, yr_L, zr_L, 1000);
 
 %% Just Ellipses
 fig = figure();

@@ -1,11 +1,12 @@
 %% Inertia Tensor
-close all
-clear
-clc
+% close all
+% clear
+% clc
 format long
 %% Constants
 % Fuel Tank
 m_f = 762.738; % mass of fuel tank
+% m_f = 3000;
 w_f = 1.85;
 b_f = 2.7;
 h_f = 0.7;
@@ -31,7 +32,7 @@ d_xf = w_f/2;
 I_xb = (1/12)*m_b*(w_b^2 + b_b^2); % base tank
 d_xb = w_b/2;
 I_xsp = (1/12)*m_sp*(w_sp^2 + b_sp^2); % solar panel
-d_xsp = 0.5*(w_b + w_sp);
+d_xsp = (w_b + 0.5*w_sp); % base is now the entire width of the bottom
 I_xp = (1/12)*m_p*(w_p^2 + b_p^2); % payload
 % Total X-dim
 I_x = (I_xf + m_f*d_xf^2) + (I_xb + m_b*d_xb^2) + 2*(I_xsp + m_sp*d_xsp^2) + I_xp;
@@ -52,17 +53,20 @@ d_zf = sqrt(((h_f/2)^2) + ((w_f/2)^2));
 I_zb = (1/12)*m_b*(h_b^2 + w_b^2);
 d_zb = sqrt(((h_b/2)^2) + ((w_b/2)^2));
 I_zsp = (1/12)*m_sp*(h_sp^2 + w_sp^2);
-d_zsp = sqrt((h_sp/2)^2 + ((w_sp+w_b)/2)^2);
+d_zsp = sqrt((h_sp/2)^2 + ((w_sp+2*w_b)/2)^2); %2*w_b because it is the entire length of the base now
 I_zp = (1/12)*m_p*(h_p^2 + w_p^2);
 d_zp = h_b + (h_p/2);
 % Total Z-dim
 I_z = (I_zb + m_b*d_zb^2) + (I_zb + m_b*d_zb^2) + 2*(I_zsp + m_sp*(d_zsp^2)) + (I_zp + m_p*d_zp^2);
 % Products of Inertia
-I_xyf = m_f*w_f*b_f;
-I_xyb = m_f*w_b*b_b;
-I_xysp = m_f*w_sp*b_sp;
-I_xyp = m_f*w_p*b_p;
-I_xy = I_xyf + I_xyb + 2*I_xysp + I_xyp; 
+I_xyf = m_f*(-w_f/2)*(-h_f/2);
+I_xyb = m_b*(w_b/2)*(-h_b/2);
+I_xysp1 = m_f*(-w_sp/2 - w_b)*(-h_sp/2);
+I_xysp2 = m_f*(w_sp/2 + w_b)*(-h_sp/2);
+% I_xyp = m_f*w_p*b_p;
+I_xyp = 0; % equal to zero because it doesn't move in the y direction
+I_xy = I_xyf + I_xyb + I_xysp1 + I_xysp2 + I_xyp; 
+
 I_yz = 0; % x-y plane symmetric
 I_xz = 0; % x-y plane symmetric
 I_yx = I_xy;
