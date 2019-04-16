@@ -49,6 +49,24 @@ title('Ellipsoids with Polhode')
 axis equal
 hold off
 
+
+%% 3D Ellipse + vel
+figure()
+surf(x_ke, y_ke, z_ke, 'EdgeColor', 'none', 'FaceAlpha', 0.5, 'FaceColor',...
+    'red')
+hold on
+surf(x_L, y_L, z_L,'EdgeColor','none','FaceAlpha', 0.5, 'FaceColor',...
+    'blue')
+
+scatter3(pol(:,1), pol(:,2), pol(:,3),'k','filled')
+scatter3(pol(:,1), pol(:,2), -pol(:,3),'k','filled') % take this out after plotting
+xlabel('x')
+ylabel('y')
+zlabel('z')
+title('Ellipsoids with Polhode')
+axis equal
+hold off
+
 %% 2D Plots
 figure()
 subplot(3,1,1)
@@ -58,6 +76,7 @@ hold on
 surf(x_L, y_L, z_L,'EdgeColor','none','FaceAlpha', 0.5, 'FaceColor',...
     'blue')
 scatter3(pol(:,1), pol(:,2), pol(:,3),'k','filled')
+scatter3(pol(:,1), pol(:,2), -pol(:,3),'k','filled') % take this out after plotting
 view([0 -90 0])
 hold on
 xlabel('x')
@@ -72,6 +91,7 @@ hold on
 surf(x_L, y_L, z_L,'EdgeColor','none','FaceAlpha', 0.5, 'FaceColor',...
     'blue')
 scatter3(pol(:,1), pol(:,2), pol(:,3),'k','filled')
+scatter3(pol(:,1), pol(:,2), -pol(:,3),'k','filled') % take this out after plotting
 hold on
 view([90 0 0])
 ylabel('y')
@@ -86,6 +106,7 @@ hold on
 surf(x_L, y_L, z_L,'EdgeColor','none','FaceAlpha', 0.5, 'FaceColor',...
     'blue')
 scatter3(pol(:,1), pol(:,2), pol(:,3),'k','filled')
+scatter3(pol(:,1), pol(:,2), -pol(:,3),'k','filled') % take this out after plotting
 view([0 0 90])
 hold on
 xlabel('x')

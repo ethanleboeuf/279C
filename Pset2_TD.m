@@ -29,15 +29,15 @@ L = norm(L_vec(1,:)); % Momentum magnitude
 L2 = (L)^2; % Squared Angular Momentum
 T = dot(w(1,:),L_vec(1,:)); % Rot Kinetic Energy
 % Energy Ellipsoid
-a_T = T./Ix;
-b_T = T./Iy;
-c_T = T./Iz;
-[X_T,Y_T,Z_T] = ellipsoid(0,0,0,a_T,b_T,c_T);
+a_T = sqrt(T./Ix);
+b_T = sqrt(T./Iy);
+c_T = sqrt(T./Iz);
+[X_T,Y_T,Z_T] = ellipsoid(0,0,0,a_T,b_T,c_T, 100);
 % Momentum Ellipsoid
-a_L = L2./(Ix^2);
-b_L = L2./(Iy^2);
-c_L = L2./(Iz^2);
-[X_L,Y_L,Z_L] = ellipsoid(0,0,0,a_L,b_L,c_L);
+a_L = L./(Ix);
+b_L = L./(Iy);
+c_L = L./(Iz);
+[X_L,Y_L,Z_L] = ellipsoid(0,0,0,a_L,b_L,c_L, 100);
 % Plot Ellipsoid
 figure
 surf(X_T,Y_T,Z_T,'EdgeColor','none','FaceAlpha',0.5,'FaceColor','red');
