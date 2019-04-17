@@ -25,7 +25,7 @@ axis equal
 hold off
 
 subplot(3,1,3)
-scatter(ave_2, alpha_2)
+scatter(ave_3, alpha_3)
 hold on
 xlabel('\omega_z')
 ylabel('\alpha_z')
