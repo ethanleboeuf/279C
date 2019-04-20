@@ -25,7 +25,7 @@ axis equal
 hold off
 
 subplot(3,1,3)
-plot(ave_2, alpha_2)
+plot(ave_3, alpha_3)
 hold on
 xlabel('\omega_z')
 ylabel('\alpha_z')
@@ -34,4 +34,3 @@ hold off
 
 sgtitle(['\alpha vs \omega Phase Plots'])
 end
-
