@@ -25,7 +25,7 @@ hold on
 xlabel('x, m')
 ylabel('y, m')
 zlabel('z, m')
-% grid on
+grid on
 Rectf2 = vert2rect([0,0], [recth, rectb], 2, [baseh rectw/2 -rectb/2]);
 fill3(Rectf2(:,1),Rectf2(:,2),Rectf2(:,3),'k','FaceAlpha', alph,'HandleVisibility','off')
 
@@ -70,7 +70,7 @@ fill3(BR6(:,1),BR6(:,2),BR6(:,3),'b','FaceAlpha', alph,'HandleVisibility','off')
 BRF7 = vert2rect([0,0], [(basew-rectw)/2, baseb], 1, [baseh basew/4 -baseb/2]);
 fill3(BRF7(:,1),BRF7(:,2),BRF7(:,3),'r','FaceAlpha', alph,'HandleVisibility','off')
 
-BR8 = vert2rect([0,0], [rectb, (baseb-rectw)/2], 1, [baseh -basew/4 rectb/2]);
+BR8 = vert2rect([0,0], [rectb/2, (baseb-rectw)/2], 1, [baseh -basew/4 rectb/2]);
 fill3(BR8(:,1),BR8(:,2),BR8(:,3),'b','FaceAlpha', alph,'HandleVisibility','off')
 
 BRF8 = vert2rect([0,0], [rectb/2, (baseb-rectw)/2], 1, [baseh 0 rectb/2]);

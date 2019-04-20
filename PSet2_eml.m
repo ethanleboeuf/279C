@@ -1,6 +1,7 @@
 clear all
 close all
-
+set(0,'DefaultAxesFontSize',22)
+set(0,'DefaultTextFontSize',26)
 %% Pset 2
 %% Initialize Spacecraft
 sc = init_sc();
@@ -41,7 +42,7 @@ omegas = [y_out(:,1) y_out(:,2) y_out(:,3)];
 
 
 %% Plot Ellipsoid and Polhode
-% [fig] = polhode_ellipsoid_plots(w, sc.Ip, y_out(:,1:3));
+[fig] = polhode_ellipsoid_plots(w, sc.Ip, y_out(:,1:3));
 
 %% Axial - Symmetric
 I_vec(2) = I_vec(1);
