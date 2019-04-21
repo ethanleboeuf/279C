@@ -18,7 +18,6 @@ TwoT = dot(w, Lvec);
 tstart = 0;
 tint = .5;
 tend = 1000;
-
 options = odeset('RelTol', 1e-5, 'AbsTol', 1e-8); 
 [t_out, y_out] = ode113(@euler_eq, [tstart:tint:tend]', state_init, options); 
 
