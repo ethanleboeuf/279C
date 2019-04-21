@@ -5,6 +5,6 @@ function [fig] = plane2vec(vec, fig, init_point)
         + vec(3) * (z - init_point(3)) == 0;
     plane = solve(eqn,z);
     
-    fsurf(plane, 'FaceColor' ,'none')
+    fsurf(plane, [-.5 .5],'FaceColor' ,'none')
 end
 

@@ -1,4 +1,4 @@
-function [q] = DCM_to_quart(DCM)
+function [q] = DCM_to_quat(DCM)
 B4 = 1/4 * (1 + trace(DCM));
 B1 = 1/4 * (1 + 2*DCM(1,1) - trace(DCM));
 B2 = 1/4 * (1 + 2*DCM(2,2) - trace(DCM));
