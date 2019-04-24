@@ -18,11 +18,14 @@ tint = omega;
 tend = 3600*24*365*omega; % convert to nondimensional time
 wt = [tstart:tint:tend];
 % DCM Rotational Parameters
-w0 = [.001; .001; 5] * pi()/180; % initial angular velocity
+w0 = [2; 1; 2.5] * pi()/180; % initial angular velocity
 sc = init_sc();
 sc = body_inertia_func(sc);
 I_vec = [sc.Ip(1,1); sc.Ip(2,2); sc.Ip(3,3)];
-C = [.892539 .157379 -.422618 -.275451 0.932257 -.234570 .357073 0.325773 .875426]';
+% DCM = [0.892539 0.157379 -0.422618;-0.275451 0.932257 -0.234570;0.357073 0.325773 0.875426]';
+% C = [.892539 .157379 -.422618 -.275451 0.932257 -.234570 .357073 0.325773 .875426];
+DCM = eye(3);
+C = eye(3);
 rot_state = [C(:); w0; I_vec];
 %% solving L1 point
 syms x
@@ -30,8 +33,9 @@ eqn = x - (1-mu1)/(x+mu1)^2 + mu1/(x-1+mu1)^2 == 0;
 digitsOld = digits(100);
 L1 = vpasolve(eqn,x,[0,1]);
 highPrecisionL1 = double(L1);
-digits(digitsOld)
-sim('Orbit_prop_279C_v1.slx')
+digits(digitsOld);
+sim('Orbit_prop_279C_v2.slx')
+sim('Kin_prop_279C_v1.slx')
 
 %% RTN Frame
 r = y_out(:,1:3);
@@ -48,7 +52,7 @@ t_RTN = zeros(3,n);
 t_RTN_mag = zeros(n,1);
 T_RTN = zeros(3,n);
 RTN = zeros(3,3,n);
-for i = 1:length(r)
+for i = 1:n
     r_rel = r(i,:) - r_L1;
     R_RTN(:,i) = r_rel'./norm(r_rel');
     v_rel = v(i,:)' ;%- cross([0;0;omega],r_L1');
@@ -69,8 +73,17 @@ for ii = 1:length(t)
 end
 
 %% DCM Kinematics
-w = y_rot_out(:,10:12);
+w_dcm = y_dcm_out(:,10:12)';
 
+%% Quaternion Kinematics
+w_q = y_q_out(:,5:7);
+
+
+
+%% Plotting
+[A] = out2mat(y_dcm_out(:, 1:9));
+ang_momentum_I_plot(w_dcm, sc, A)
+ang_velocity_I_plot(w_dcm, A, sc)
 
 
 %% Plotting
@@ -89,6 +102,17 @@ grid on
 legend('Halo Orbit', 'L1 Point', 'Earth')
 hold off
 (y_out(1,1) - y_out(end,1))*dis.sun %check on final error in the distance
+
+
+figure('units','normalized','outerposition',[0 0 1 1])
+scatter3(y_dcm_out(:,10), y_dcm_out(:, 11), y_dcm_out(:, 12))
+hold on
+xlabel('x, rad/s')
+ylabel('y, rad/s')
+zlabel('z, rad/s')
+title('Principal Axes $\vec{\omega}$', 'Interpreter', 'latex')
+hold off
+
 
 % figure()
 % subplot(3,1,1)
