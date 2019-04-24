@@ -7,7 +7,7 @@ set(0,'DefaultTextFontSize',26)
 sc = init_sc();
 sc = body_inertia_func(sc);
 I_vec = [sc.Ip(1,1); sc.Ip(2,2); sc.Ip(3,3)];
-w = [2; 1; 2.5] * pi()/180;
+w = [0; 01; 2.5] * pi()/180;
 
 % C = [.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .875426];
 C = eye(3);
@@ -31,7 +31,7 @@ w_out = y_out(:, 10:12)';
 %% Plotting
 ang_momentum_I_plot(w_out, sc, A)
 ang_velocity_I_plot(w_out, A, sc)
-% axes_plot(A, sc)
+axes_plot(A, sc)
 
 
 figure('units','normalized','outerposition',[0 0 1 1])
@@ -43,71 +43,85 @@ zlabel('z, rad/s')
 title('Principal Axes $\vec{\omega}$', 'Interpreter', 'latex')
 hold off
 
-%% NEW ROTATIONS
-C = eye(3);
-w = [.01; 6; 0.01] * pi()/180;
-
-%% Simulate Rotation DCM
-state_init = [C(:); w; I_vec];
-tstart = 0;
-tint = .5;
-tend = 5000;
-
-options = odeset('RelTol', 1e-5, 'AbsTol', 1e-8); 
-[t_out, y_out] = ode113(@DCM_kin, [tstart:tint:tend]', state_init, options); 
-
-
-%% Computing Angular Momentum
-[A] = out2mat(y_out(:, 1:9));
-w_out = y_out(:, 10:12)';
-%% Plotting (Problem 4)
-
-ang_momentum_I_plot(w_out, sc, A)
-ang_velocity_I_plot(w_out, A, sc)
-% axes_plot(A, sc)
-
-figure('units','normalized','outerposition',[0 0 1 1])
-scatter3(y_out(:,10), y_out(:, 11), y_out(:, 12))
-hold on
-xlabel('x, rad/s')
-ylabel('y, rad/s')
-zlabel('z, rad/s')
-title('Principal Axes $\vec{\omega}$', 'Interpreter', 'latex')
-hold off
-
+% %% NEW ROTATIONS
+% C = eye(3);
+% w = [.01; 6; 0.01] * pi()/180;
+% 
+% %% Simulate Rotation DCM
+% state_init = [C(:); w; I_vec];
+% tstart = 0;
+% tint = .5;
+% tend = 5000;
+% 
+% options = odeset('RelTol', 1e-5, 'AbsTol', 1e-8); 
+% [t_out, y_out] = ode113(@DCM_kin, [tstart:tint:tend]', state_init, options); 
+% 
+% 
+% %% Computing Angular Momentum
+% [A] = out2mat(y_out(:, 1:9));
+% w_out = y_out(:, 10:12)';
+% %% Plotting (Problem 4)
+% 
+% ang_momentum_I_plot(w_out, sc, A)
+% ang_velocity_I_plot(w_out, A, sc)
+% % axes_plot(A, sc)
+% 
+% figure('units','normalized','outerposition',[0 0 1 1])
+% scatter3(y_out(:,10), y_out(:, 11), y_out(:, 12))
+% hold on
+% xlabel('x, rad/s')
+% ylabel('y, rad/s')
+% zlabel('z, rad/s')
+% title('Principal Axes $\vec{\omega}$', 'Interpreter', 'latex')
+% hold off
+% 
 
 %% Momentum Wheel Testing
-
-w = [0.001; 0.001; 6] * pi()/180;
-C = [.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .875426];
+% w = [0.001; 6; 0.001] * pi()/180;
+% w = [0;6;0] * pi()/180;
+% w = [6; 0.001; 0.001] * pi()/180;
+% C = [.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .875426];
 % C = eye(3);
-
-Ir = 90; %from SMAD
-r_w = [0; 1; 0]/norm([1;0;0]);
-wr = 5;  %from SMAD
-state_init = [C(:); w; I_vec; wr; Ir; r_w];
-tstart = 0;
-tint = .5;
-tend = 5000;
-
-options = odeset('RelTol', 1e-5, 'AbsTol', 1e-8); 
-[t_out, y_out] = ode113(@DCM_kin_wheel, [tstart:tint:tend]', state_init, options); 
-
-[A] = out2mat(y_out(:, 1:9));
-w_out = y_out(:, 10:12)';
-ang_momentum_I_plot(w_out, sc, A)
-ang_velocity_I_plot(w_out, A, sc)
-figure('units','normalized','outerposition',[0 0 1 1])
-scatter3(y_out(:,10), y_out(:, 11), y_out(:, 12))
-hold on
-xlabel('x axis')
-ylabel('y axis')
-zlabel('z axis')
-% title('Angular Momentum Vector over Time')
-hold off
-
+% 
+% Ir = 90; %from SMAD
+% r_w = [0; 1; 0]/norm([1;0;0]);
+% wr = 2*pi/10;  %from SMAD
+% state_init = [C(:); w; I_vec; wr; Ir; r_w];
+% tstart = 0;
+% tint = .5;
+% tend = 5000;
+% 
+% options = odeset('RelTol', 1e-10, 'AbsTol', 1e-12); 
+% [t_out, y_out] = ode113(@DCM_kin_wheel, [tstart:tint:tend]', state_init, options); 
+% 
+% state_init = [C(:); w; I_vec; 2*pi; Ir; r_w];
+% options = odeset('RelTol', 1e-5, 'AbsTol', 1e-8); 
+% [t_out, y_out_2] = ode113(@DCM_kin_wheel, [tstart:tint:tend]', state_init, options); 
+% 
+% 
+% [A] = out2mat(y_out(:, 1:9));
+% w_out = y_out(:, 10:12)';
+% 
+% [A2] = out2mat(y_out_2(:, 1:9));
+% w_out_2 = y_out_2(:, 10:12)';
+% 
+% ang_momentum_I_plot(w_out, sc, A)
+% 
+% ang_velocity_I_plot(w_out, A, sc)
+% ang_velocity_I_plot(w_out_2, A2, sc)
+% axes_plot(A, sc)
+% 
+% figure('units','normalized','outerposition',[0 0 1 1])
+% scatter3(y_out(:,10), y_out(:, 11), y_out(:, 12))
+% hold on
+% xlabel('x, rad/s')
+% ylabel('y, rad/s')
+% zlabel('z, rad/s')
+% title('Principal Axes $\vec{\omega}$', 'Interpreter', 'latex')
+% hold off
+% 
 % Ir * wr > (I_vec(3) - I_vec(2))*w(2)
-% Ir * wr > (I_vec(1) - I_vec(3))*w(2)
+% Ir * wr > (I_vec(1) - I_vec(2))*w(2)
 
 %% Simulate Rotation Quaternions
 state_init = [q_init; w; I_vec];
