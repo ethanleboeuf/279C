@@ -8,7 +8,7 @@ wz = state(7);
 %% Kinematic Equations
 Omega = [0 wz -wy wx; -wz 0 wx wy; wy -wx 0 wz; -wx -wy -wz 0];
 err = 1 - norm(state(1:4));
-state_dot(1:4) = 1/2 * Omega * state(1:4);%/norm(state(1:4));% + .5*err * state(1:4);
+state_dot(1:4) = 1/2 * Omega * state(1:4) + 0.05 * err * state(1:4);
 
 %% Euler Equations
 state_dot(5) = -wy*wz * (state(10) - state(9))/state(8);

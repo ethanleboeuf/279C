@@ -11,13 +11,14 @@ end
 
 L = norm(L_vec_I(:,1));
 figure('units','normalized','outerposition',[0 0 1 1])
-scatter3((L_vec_I(1,:)- L_vec_I(1,1)), (L_vec_I(2,:)- L_vec_I(2,1)),...
-    (L_vec_I(3,:)- L_vec_I(3,1)))
+scatter3((L_vec_I(1,:)- L_vec_I(1,1))/L_vec_I(1,1)*100,...
+    (L_vec_I(2,:)- L_vec_I(2,1))/L_vec_I(1,1)*100,...
+    (L_vec_I(3,:)- L_vec_I(3,1))/L_vec_I(1,1)*100)
 hold on
-xlabel('\Delta_x')
-ylabel('\Delta_y')
-zlabel('\Delta_z')
-title('Differnce in Angular Momentum Vector over Time Compared to Initial')
+xlabel('\Delta_I, % Error')
+ylabel('\Delta_J, % Error')
+zlabel('\Delta_K, % Error')
+title('Percent Error of Angular Momentum Vector from Initial Condition')
 hold off
 
 end

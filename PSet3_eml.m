@@ -7,7 +7,7 @@ set(0,'DefaultTextFontSize',26)
 sc = init_sc();
 sc = body_inertia_func(sc);
 I_vec = [sc.Ip(1,1); sc.Ip(2,2); sc.Ip(3,3)];
-w = [.001; .001; 5] * pi()/180;
+w = [2; 1; 2.5] * pi()/180;
 
 % C = [.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .875426];
 C = eye(3);
@@ -17,10 +17,10 @@ q_init = DCM_to_quat(C);
 %% Simulate Rotation DCM
 state_init = [C(:); w; I_vec];
 tstart = 0;
-tint = .5;
+tint = .25;
 tend = 1000;
 
-options = odeset('RelTol', 1e-5, 'AbsTol', 1e-8); 
+options = odeset('RelTol', 1e-10, 'AbsTol', 1e-12); 
 [t_out, y_out] = ode113(@DCM_kin, [tstart:tint:tend]', state_init, options); 
 
 
@@ -30,17 +30,17 @@ w_out = y_out(:, 10:12)';
 
 %% Plotting
 ang_momentum_I_plot(w_out, sc, A)
-ang_velocity_I_plot(w_out, A)
+ang_velocity_I_plot(w_out, A, sc)
 % axes_plot(A, sc)
 
 
 figure('units','normalized','outerposition',[0 0 1 1])
 scatter3(y_out(:,10), y_out(:, 11), y_out(:, 12))
 hold on
-xlabel('x axis')
-ylabel('y axis')
-zlabel('z axis')
-title('Body Axes \omega Vector')
+xlabel('x, rad/s')
+ylabel('y, rad/s')
+zlabel('z, rad/s')
+title('Principal Axes $\vec{\omega}$', 'Interpreter', 'latex')
 hold off
 
 %% NEW ROTATIONS
@@ -63,28 +63,28 @@ w_out = y_out(:, 10:12)';
 %% Plotting (Problem 4)
 
 ang_momentum_I_plot(w_out, sc, A)
-ang_velocity_I_plot(w_out, A)
+ang_velocity_I_plot(w_out, A, sc)
 % axes_plot(A, sc)
 
 figure('units','normalized','outerposition',[0 0 1 1])
 scatter3(y_out(:,10), y_out(:, 11), y_out(:, 12))
 hold on
-xlabel('x axis')
-ylabel('y axis')
-zlabel('z axis')
-title('Body Axes \omega Vector')
+xlabel('x, rad/s')
+ylabel('y, rad/s')
+zlabel('z, rad/s')
+title('Principal Axes $\vec{\omega}$', 'Interpreter', 'latex')
 hold off
 
 
 %% Momentum Wheel Testing
 
-w = [.001; 6; .001] * pi()/180;
-% C = [.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .875426];
-C = eye(3);
+w = [0.001; 0.001; 6] * pi()/180;
+C = [.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .875426];
+% C = eye(3);
 
 Ir = 90; %from SMAD
-r_w = [1; 1; 0]/norm([1;1;0]);
-wr = 1;  %from SMAD
+r_w = [0; 1; 0]/norm([1;0;0]);
+wr = 5;  %from SMAD
 state_init = [C(:); w; I_vec; wr; Ir; r_w];
 tstart = 0;
 tint = .5;
@@ -96,15 +96,15 @@ options = odeset('RelTol', 1e-5, 'AbsTol', 1e-8);
 [A] = out2mat(y_out(:, 1:9));
 w_out = y_out(:, 10:12)';
 ang_momentum_I_plot(w_out, sc, A)
-ang_velocity_I_plot(w_out, A)
-% figure('units','normalized','outerposition',[0 0 1 1])
-% scatter3(y_out(:,10), y_out(:, 11), y_out(:, 12))
-% hold on
-% xlabel('x axis')
-% ylabel('y axis')
-% zlabel('z axis')
+ang_velocity_I_plot(w_out, A, sc)
+figure('units','normalized','outerposition',[0 0 1 1])
+scatter3(y_out(:,10), y_out(:, 11), y_out(:, 12))
+hold on
+xlabel('x axis')
+ylabel('y axis')
+zlabel('z axis')
 % title('Angular Momentum Vector over Time')
-% hold off
+hold off
 
 % Ir * wr > (I_vec(3) - I_vec(2))*w(2)
 % Ir * wr > (I_vec(1) - I_vec(3))*w(2)
@@ -136,4 +136,4 @@ for ii = 1:size(y_out,1)
     mag_q(ii) = norm(y_out(ii, 1:4));
 end
 figure()
-plot(t_out(:), mag_q)
+plot(t_out(:), mag_q - ones(1, length(mag_q)))

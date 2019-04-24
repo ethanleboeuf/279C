@@ -23,9 +23,9 @@ hold on
 surf(x_L, y_L, z_L,'EdgeColor','none','FaceAlpha', 0.5, 'FaceColor',...
     'blue')
 legend('Kinetic Energy Ellipsoid', 'Angular Momentum Ellipsoid')
-xlabel('x')
-ylabel('y')
-zlabel('z')
+xlabel('x, rad/s')
+ylabel('y, rad/s')
+zlabel('z, rad/s')
 title('Ellipsoids')
 axis equal
 hold off
@@ -42,9 +42,9 @@ surf(x_L, y_L, z_L,'EdgeColor','none','FaceAlpha', 0.5, 'FaceColor',...
     'blue')
 % 
 % scatter3(pol(:,1), pol(:,2), pol(:,3),'k','filled')
-xlabel('x')
-ylabel('y')
-zlabel('z')
+xlabel('x, rad/s')
+ylabel('y, rad/s')
+zlabel('z, rad/s')
 title('Ellipsoids with Polhode')
 axis equal
 hold off
@@ -60,9 +60,9 @@ surf(x_L, y_L, z_L,'EdgeColor','none','FaceAlpha', 0.5, 'FaceColor',...
 
 scatter3(pol(:,1), pol(:,2), pol(:,3),'k','filled')
 scatter3(pol(:,1), pol(:,2), -pol(:,3),'k','filled') % take this out after plotting
-xlabel('x')
-ylabel('y')
-zlabel('z')
+xlabel('x, rad/s')
+ylabel('y, rad/s')
+zlabel('z, rad/s')
 title('Ellipsoids with Polhode')
 axis equal
 hold off
@@ -79,8 +79,8 @@ scatter3(pol(:,1), pol(:,2), pol(:,3),'k','filled')
 scatter3(pol(:,1), pol(:,2), -pol(:,3),'k','filled') % take this out after plotting
 view([0 -90 0])
 hold on
-xlabel('x')
-zlabel('z')
+xlabel('x, rad/s')
+zlabel('z, rad/s')
 grid on
 hold off
 
@@ -94,8 +94,8 @@ scatter3(pol(:,1), pol(:,2), pol(:,3),'k','filled')
 scatter3(pol(:,1), pol(:,2), -pol(:,3),'k','filled') % take this out after plotting
 hold on
 view([90 0 0])
-ylabel('y')
-zlabel('z')
+ylabel('y, rad/s')
+zlabel('z, rad/s')
 grid on
 hold off
 
@@ -109,8 +109,8 @@ scatter3(pol(:,1), pol(:,2), pol(:,3),'k','filled')
 scatter3(pol(:,1), pol(:,2), -pol(:,3),'k','filled') % take this out after plotting
 view([0 0 90])
 hold on
-xlabel('x')
-ylabel('y')
+xlabel('x, rad/s')
+ylabel('y, rad/s')
 grid on
 hold off
 

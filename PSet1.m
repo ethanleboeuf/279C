@@ -28,8 +28,8 @@ state_sc_earth = [r; v; mu1];
 
 tstart = 0;
 tint = 25*omega;
-% tend = 3600*24*176.9228*omega; % convert to nondimensional time
-tend = 3600*24*365*omega; % convert to nondimensional time
+tend = 3600*24*176.9228*omega; % convert to nondimensional time
+% tend = 3600*24*365*omega; % convert to nondimensional time
 
 options = odeset('RelTol', 1e-3, 'AbsTol', 1e-6); 
 [t_out, y_out] = ode113(@orbit_prop, [tstart:tint:tend]', state_sc_earth, options); 
