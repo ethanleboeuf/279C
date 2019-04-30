@@ -1,3 +1,6 @@
 
 *.asv
 test_tomer.m
+Simulink Models/SOHO_sim_v1.slx.autosave
+*.autosave
+*.autosave
