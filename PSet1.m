@@ -8,7 +8,7 @@ set(0,'DefaultTextFontSize',26)
 constants
 %% Initial Conditions
 mu1 = 328900.56^-1; % From NASA
-omega = sqrt((mu.earth + mu.moon + mu.sun)/dis.sun^3);
+omega = sqrt((mu.earth + mu.sun)/dis.sun^3);
 
 %% solving L1
 syms x

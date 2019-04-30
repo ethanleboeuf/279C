@@ -1,4 +1,4 @@
-function [state_dot] = euler_eq(t, state)
+function [state_dot] = euler_eq(state)
 % state = [w; I]
 
 state_dot = zeros(length(state), 1);
