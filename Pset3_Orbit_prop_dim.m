@@ -70,11 +70,11 @@ grid on
 legend('Halo Orbit', 'L1 Point', 'Earth')
 hold off
 
-% figure('units','normalized','outerposition',[0 0 1 1])
-% scatter3(dcm_out(:,10), dcm_out(:, 11), dcm_out(:, 12))
-% hold on
-% xlabel('x, rad/s')
-% ylabel('y, rad/s')
-% zlabel('z, rad/s')
-% title('Principal Axes $\vec{\omega}$', 'Interpreter', 'latex')
-% hold off
+figure('units','normalized','outerposition',[0 0 1 1])
+scatter3(dcm_out(:,10), dcm_out(:, 11), dcm_out(:, 12))
+hold on
+xlabel('x, rad/s')
+ylabel('y, rad/s')
+zlabel('z, rad/s')
+title('Principal Axes $\vec{\omega}$', 'Interpreter', 'latex')
+hold off

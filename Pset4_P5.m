@@ -10,7 +10,7 @@ k_T = (I_vec(3) - I_vec(1))/I_vec(2);
 k_R = (I_vec(3) - I_vec(2))/I_vec(1);
 
 
-v = -1:.005:1; 
+v = -1:.001:1; 
 [x, y] = meshgrid(v);
 
 cond1 = x > y;

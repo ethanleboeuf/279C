@@ -15,8 +15,11 @@ omega = (sqrt((mu.earth + mu.moon + mu.sun)/dis.sun^3));
 mu1 = 328900.56^-1; % From NASA
 r0 = [.98900883730044109; 0; 0.000802140914099732]*dis.sun;
 v0 = [0; 0.010697471710460349-2.895683e-3; 0] * dis.sun * omega;
-w0 = [2; 1; 2.5] * pi()/180; % initial angular velocity
-DCM =[.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .875426];
+% w0 = [2; 1; 2.5] * pi()/180; % initial angular velocity
+w0 = [0 ; 0; omega];
+
+% DCM =[.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .875426];
+DCM = [0.999999671094767 0 -8.110550887097017e-04; 0 1 0; 8.110550887097016e-04 0 0.999999671094768];
 %% Gravity Gradient Torque
 
 % I made some changes in here. I included sun and earth positions in the
@@ -25,19 +28,19 @@ DCM =[.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .87
 % mass ratio type thing
 
 
-sim('SOHO_sim_v2.slx')
-size = length(Inert_out);
-x = Inert_out(:,1);
-y = Inert_out(:,2);
-z = Inert_out(:,3);
+sim('SOHO_sim_v3.slx')
+size = length(Inert_pos_out);
+x = Inert_pos_out(:,1);
+y = Inert_pos_out(:,2);
+z = Inert_pos_out(:,3);
 
-x_s = Inert_out(:,4);
-y_s = Inert_out(:,5);
-z_s = Inert_out(:,6);
+x_s = Inert_pos_out(:,4);
+y_s = Inert_pos_out(:,5);
+z_s = Inert_pos_out(:,6);
 
-x_e = Inert_out(:,7);
-y_e = Inert_out(:,8);
-z_e = Inert_out(:,9);
+x_e = Inert_pos_out(:,7);
+y_e = Inert_pos_out(:,8);
+z_e = Inert_pos_out(:,9);
 
 xyz =[x,y,z];
 xyz_p = zeros(size,3);
@@ -75,5 +78,5 @@ M_sun(ii,:) = (3*mu.sun./((R_s(ii)).^3)).*[((Iz_sat - Iy_sat).*cy_s(ii).*cz_s(ii
     ((Iy_sat - Ix_sat).*cx_s(ii).*cy_s(ii))'];
 end
 % Combined torque
-M = M_earth + M_sun;
+M_script = M_earth + M_sun;
 
