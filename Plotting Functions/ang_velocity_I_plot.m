@@ -12,7 +12,7 @@ end
 
 fig = figure('units','normalized','outerposition',[0 0 1 1]);
 % scatter3(w_I(1,:), w_I(2,:), w_I(3,:),'filled')
-scatter3(w_I(1,:), w_I(2,:), w_I(3,:),'.')
+plot3(w_I(1,:), w_I(2,:), w_I(3,:))
 hold on
 % [fig] = plane2vec(L_vec_I(:,1), fig, w_I(:,1));% ONLY USE FOR FIGURES
 % NEEDED FOR PAPER TAKES FOREVER TO RUN

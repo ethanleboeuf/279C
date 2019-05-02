@@ -26,6 +26,15 @@ m_p = 610; % mass of payload section
 w_p = 1.85;
 b_p = 1.85;
 h_p = 3.6;
+
+%% COM Calculation
+x_cm = (2 * m_sp * h_sp/2 + m_f*h_f/2 + m_b*h_b/2 + m_p*(h_b + h_p/2))/...
+    (2 * m_sp + m_f + m_b + m_p);
+
+y_cm = (m_sp * (w_sp/2 + w_f) - m_sp *(w_sp/2 + w_b) + m_f*w_f/2 - m_b*h_b/2 + m_p*(0))/...
+    (2 * m_sp + m_f + m_b + m_p);
+
+z_cm = 0;
 %% Inertia calcs
 % X-dim
 I_xf = (1/12)*m_f*(w_f^2 + b_f^2); % fuel tank
