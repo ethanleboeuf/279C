@@ -1,4 +1,4 @@
-function [sc, fig] = SOHO_gen(rect, base, sp, R)
+function [sc, fig] = SOHO_gen(rect, base, sp, R, sc)
 % Will generate structure with coordinates for the spacecraft components
 %   Inputs are structs of the height, width, and breadth of the spacecraft
 %   components
@@ -115,8 +115,8 @@ fill3(SP25(:,1),SP25(:,2),SP25(:,3),'c','FaceAlpha', alph,'HandleVisibility','of
 
 axis equal
 title('Simplified Geometry of SOHO')
-quiver3(zeros(3,1),zeros(3,1),zeros(3,1),[1;0;0],[0;1;0],[0;0;1],'linewidth',3,'color','g')
-quiver3(zeros(3,1),zeros(3,1),zeros(3,1), R(:,1), R(:,2), R(:,3), 'linewidth',3,'color',[102/255 0/255 51/255])
+quiver3(ones(3,1)*sc.CM(1),ones(3,1)*sc.CM(2),ones(3,1)*sc.CM(3),[1;0;0],[0;1;0],[0;0;1],0,'linewidth',3,'color','g')
+quiver3(ones(3,1)*sc.CM(1),ones(3,1)*sc.CM(2),ones(3,1)*sc.CM(3), R(:,1), R(:,2), R(:,3),0, 'linewidth',3,'color',[102/255 0/255 51/255])
 legend('Scientific Payload Section', 'Base', 'Base with Fuel Tank', 'Solar Panels','Body Axes','Principal Axes')
 
 hold off

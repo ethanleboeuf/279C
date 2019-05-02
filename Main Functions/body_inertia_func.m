@@ -65,7 +65,7 @@ d_zsp = sqrt((h_sp/2)^2 + ((w_sp+2*w_b)/2)^2); %2*w_b because it is the entire l
 I_zp = (1/12)*m_p*(h_p^2 + w_p^2);
 d_zp = h_b + (h_p/2);
 % Total Z-dim
-I_z = (I_zb + m_b*d_zb^2) + (I_zb + m_b*d_zb^2) + 2*(I_zsp + m_sp*(d_zsp^2)) + (I_zp + m_p*d_zp^2) + (I_zf + m_f*d_zf^2);
+I_z = (I_zf + m_f*d_zf^2) + (I_zb + m_b*d_zb^2) + 2*(I_zsp + m_sp*(d_zsp^2)) + (I_zp + m_p*d_zp^2);
 % Products of Inertia
 I_xyf = m_f*(-w_f/2)*(-h_f/2);
 I_xyb = m_b*(w_b/2)*(-h_b/2);
@@ -75,8 +75,8 @@ I_xysp2 = m_f*(w_sp/2 + w_b)*(-h_sp/2);
 I_xyp = 0; % equal to zero because it doesn't move in the y direction
 I_xy = I_xyf + I_xyb + I_xysp1 + I_xysp2 + I_xyp;
 
-% I_yz = 0; % x-y plane symmetric
-% I_xz = 0; % x-y plane symmetric
+I_yz = 0; % x-y plane symmetric
+I_xz = 0; % x-y plane symmetric
 % I_yx = I_xy;
 % I_zx = I_xz;
 % I_zy = I_yz;
@@ -99,5 +99,5 @@ I_b_cm = [I_cm_x,-I_cm_xy,-I_cm_xz;-I_cm_yx,I_cm_y,-I_cm_yz;-I_cm_zx,-I_cm_zy,I_
 sc.R = R;
 sc.Ip = I_p;
 sc.Ib_cm = I_b_cm;
-
+sc.CM = [x_cm, y_cm, z_cm];
 end
