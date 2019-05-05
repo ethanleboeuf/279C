@@ -11,10 +11,17 @@ n = length(t);
 % specific_triad_plot(R, T , N, 'RTN')
 % 
 [A] = out2mat(dcm_out(:, 1:9));
-w_out = dcm_out(:, 10:12)';
-ang_momentum_I_plot(w_out, sc, A)
-ang_velocity_I_plot(w_out, A, sc)
-axes_plot(A, sc)
+A_nom = out2mat(dcm_nom_out(:, 1:9));
+Err_mat = zeros(3,3,n);
+for ii = 1:n
+    Err_mat(:,:,ii) = A(:, :, ii) * A_nom(:, :, ii)';
+    
+end
+axes_plot(Err_mat, sc)
+% w_out = dcm_out(:, 10:12)';
+% ang_momentum_I_plot(w_out, sc, A)
+% ang_velocity_I_plot(w_out, A, sc)
+% axes_plot(A, sc)
 % 
 % figure(2)
 % unit_sun = zeros(3, n);

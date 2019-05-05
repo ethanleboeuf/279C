@@ -15,7 +15,7 @@ omega = (sqrt((mu.earth + mu.moon + mu.sun)/dis.sun^3));
 mu1 = 328900.56^-1; % From NASA
 r0 = [.98900883730044109; 0; 0.000802140914099732]*dis.sun;
 v0 = [0; 0.010697471710460349-2.895683e-3; 0] * dis.sun * omega;
-% w0 = [.01; 2; .01] * pi()/180; % initial angular velocity
+% w0 = [2; 5; 2] * pi()/180; % initial angular velocity
 w0 = [omega/100 ; omega;  omega/100];
 
 % DCM =[.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .875426];
@@ -32,7 +32,7 @@ DCM = [0.999999671094767 0 -8.110550887097017e-04; 0 1 0; 8.110550887097016e-04 
 % mass ratio type thing
 
 
-sim('SOHO_sim_v3.slx')
+sim('SOHO_sim_v4.slx')
 size = length(Inert_pos_out);
 x = Inert_pos_out(:,1);
 y = Inert_pos_out(:,2);
