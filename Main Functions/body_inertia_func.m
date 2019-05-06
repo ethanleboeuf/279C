@@ -41,8 +41,8 @@ I_xf_cm = I_xf - m_f*(d_xf - y_cm)^2;
 d_xb = w_b/2;
 I_xb = (1/12)*m_b*(w_b^2 + b_b^2) + + m_b*d_xb^2; % base tank
 I_xb_cm = I_xb - m_b*(d_xb + y_cm)^2;
-I_xsp = (1/12)*m_sp*(w_sp^2 + b_sp^2) + m_sp*d_xsp^2; % solar panel
 d_xsp = (w_b + 0.5*w_sp);
+I_xsp = (1/12)*m_sp*(w_sp^2 + b_sp^2) + m_sp*d_xsp^2; % solar panel
 I_xsp1_cm = I_xsp - m_sp*(d_xsp - y_cm)^2;
 I_xsp2_cm = I_xsp - m_sp*(d_xsp + y_cm)^2;
 I_xp = (1/12)*m_p*(w_p^2 + b_p^2); % payload
@@ -106,6 +106,18 @@ I_zx = I_xz;
 I_zx_cm = I_xz_cm;
 I_zy = I_yz;
 I_zy_cm = I_yz_cm;
+I_yz = 0; % x-y plane symmetric
+I_xz = 0; % x-y plane symmetric
+% CM Inertia
+I_cm_x = I_x - M*x_cm^2;
+I_cm_y = I_y - M*y_cm^2;
+I_cm_z = I_z - M*z_cm^2;
+I_cm_xy = I_xy - M*x_cm*y_cm;
+I_cm_xz = I_xz - M*x_cm*z_cm;
+I_cm_yz = I_yz - M*y_cm*z_cm;
+I_cm_yx = I_cm_xy;
+I_cm_zx = I_cm_xz;
+I_cm_zy = I_cm_yz;
 
 %% Body Axes Inertia Tensor
 I_b_cm = [I_x_cm,-I_xy_cm,-I_xz_cm;-I_yx_cm,I_y_cm,-I_yz_cm;-I_zx_cm,-I_zy_cm,I_z_cm];
@@ -116,7 +128,5 @@ I_b_cm = [I_x_cm,-I_xy_cm,-I_xz_cm;-I_yx_cm,I_y_cm,-I_yz_cm;-I_zx_cm,-I_zy_cm,I_
 sc.R = R;
 sc.Ip = I_p;
 sc.Ib_cm = I_b_cm;
-
+sc.CM = [x_cm, y_cm, z_cm];
 end
-
-
