@@ -1,4 +1,4 @@
-%function [sc] = body_inertia_func(sc)
+function [sc] = body_inertia_func(sc)
 %% Inertia Tensor
 % close all
 % clear
@@ -117,6 +117,6 @@ sc.R = R;
 sc.Ip = I_p;
 sc.Ib_cm = I_b_cm;
 
-%end
+end
 
 
