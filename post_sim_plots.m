@@ -12,11 +12,19 @@ n = length(t);
 % N(:, :) = RTN_out(:, 3, :);
 % specific_triad_plot(R, T , N, 'RTN')
 % 
+<<<<<<< HEAD
 % [A] = out2mat(dcm_out(:, 1:9));
 % w_out = dcm_out(:, 10:12)';
 % ang_momentum_I_plot(w_out, sc, A)
 % ang_velocity_I_plot(w_out, A, sc)
 % axes_plot(A, sc)
+=======
+[A] = out2mat(dcm_out(:, 1:9));
+w_out = dcm_out(:, 10:12)';
+ang_momentum_I_plot(w_out, sc, A)
+ang_velocity_I_plot(w_out, A, sc)
+axes_plot(A, sc)
+>>>>>>> parent of ff3e13b... Woo! Nomimal and Perturbed now output
 % 
 % figure(2)
 % unit_sun = zeros(3, n);

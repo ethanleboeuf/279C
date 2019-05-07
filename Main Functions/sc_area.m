@@ -1,6 +1,7 @@
 function [sc] = sc_area(sc)
 
 subsections = fieldnames(sc);
+subsections = {'rect';'base';'fuel';'sp1';'sp2'};
 poss = [1 2 3];
 for subsect = subsections'
     faces = fieldnames(sc.(subsect{1}));
@@ -20,4 +21,3 @@ for subsect = subsections'
 end
 
 end
-
