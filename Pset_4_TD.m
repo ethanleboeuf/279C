@@ -9,13 +9,27 @@ I_vec = [sc.Ip(1,1); sc.Ip(2,2); sc.Ip(3,3)];
 Ix_sat = I_vec(1);
 Iy_sat = I_vec(2);
 Iz_sat = I_vec(3);
+% Convert sc struct to arrays
+subsections = fieldnames(sc);
+subsections = {'rect';'base';'fuel';'sp1';'sp2'};
+count = 1;
+for subsect = subsections'
+    faces = fieldnames(sc.(subsect{1}));
+    for face = faces'
+        areas(count) = sc.(subsect{1}).(face{1}).area;
+        bcs(count,:) = sc.(subsect{1}).(face{1}).bc;
+        normals(count,:) = sc.(subsect{1}).(face{1}).normal;
+        count = count+1;
+    end
+end
+
 constants % access constants (mu, distance to earth, etc.)
 
 omega = (sqrt((mu.earth + mu.moon + mu.sun)/dis.sun^3));
 mu1 = 328900.56^-1; % From NASA
 r0 = [.98900883730044109; 0; 0.000802140914099732]*dis.sun;
 v0 = [0; 0.010697471710460349-2.895683e-3; 0] * dis.sun * omega;
-% w0 = [2; 1; 2.5] * pi()/180; % initial angular velocity
+w0 = [2; 1; 2.5] * pi()/180; % initial angular velocity
 % w0 = [0 ; 0; omega];
 % w0 = [.01; 2; .01] * pi()/180; % initial angular velocity
 
@@ -29,7 +43,7 @@ DCM = [0.999999671094767 0 -8.110550887097017e-04; 0 1 0; 8.110550887097016e-04 
 % mass ratio type thing
 
 
-sim('SOHO_sim_v3.slx')
+sim('SOHO_sim_v5.slx')
 size = length(Inert_pos_out);
 x = Inert_pos_out(:,1);
 y = Inert_pos_out(:,2);
