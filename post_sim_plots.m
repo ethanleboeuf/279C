@@ -1,8 +1,6 @@
 %% Plotting Results from Sim
 close all
 n = length(t);
-
-
 % R = zeros(3, n);
 % T = zeros(3, n);
 % N = zeros(3, n);
@@ -12,19 +10,18 @@ n = length(t);
 % N(:, :) = RTN_out(:, 3, :);
 % specific_triad_plot(R, T , N, 'RTN')
 % 
-<<<<<<< HEAD
-% [A] = out2mat(dcm_out(:, 1:9));
+[A] = out2mat(dcm_out(:, 1:9));
+A_nom = out2mat(dcm_nom_out(:, 1:9));
+Err_mat = zeros(3,3,n);
+for ii = 1:n
+    Err_mat(:,:,ii) = A(:, :, ii) * A_nom(:, :, ii)';
+    
+end
+axes_plot(Err_mat, sc)
 % w_out = dcm_out(:, 10:12)';
 % ang_momentum_I_plot(w_out, sc, A)
 % ang_velocity_I_plot(w_out, A, sc)
 % axes_plot(A, sc)
-=======
-[A] = out2mat(dcm_out(:, 1:9));
-w_out = dcm_out(:, 10:12)';
-ang_momentum_I_plot(w_out, sc, A)
-ang_velocity_I_plot(w_out, A, sc)
-axes_plot(A, sc)
->>>>>>> parent of ff3e13b... Woo! Nomimal and Perturbed now output
 % 
 % figure(2)
 % unit_sun = zeros(3, n);
@@ -57,22 +54,7 @@ ylabel('Gravity Gradient Torque, Nm')
 title('Gravity Gradient Torque over one Orbit around L1')
 hold off
 
-
-% [A] = out2mat(dcm_out(:, 1:9));
-% axes_plot(A, sc)
-% 
-% figure()
-% scatter3(Inert_pos_out(1:10:end,1), Inert_pos_out(1:10:end,2), Inert_pos_out(1:10:end,3), '.', 'b')
-% hold on 
-% scatter3(Inert_pos_out(1:10:end,4), Inert_pos_out(1:10:end,5), Inert_pos_out(1:10:end,6), '.', 'r')
-% scatter3(Inert_pos_out(1:10:end,7), Inert_pos_out(1:10:end,8), Inert_pos_out(1:10:end,9), '.', 'g')
-% xlabel('I')
-% ylabel('J')
-% zlabel('K')
-% hold off
-
-
-
+figure()
 subplot(3,1,1)
 plot(t/3600/24, M(:, 1), 'k', 'LineWidth', 3)
 hold on
