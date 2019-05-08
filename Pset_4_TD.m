@@ -18,7 +18,7 @@ for subsect = subsections'
     for face = faces'
         areas(count) = sc.(subsect{1}).(face{1}).area;
         bcs(count,:) = sc.(subsect{1}).(face{1}).bc;
-        normals(count,:) = sc.(subsect{1}).(face{1}).normal;
+        normals(count,:) = sc.R * sc.(subsect{1}).(face{1}).normal;
         count = count+1;
     end
 end
@@ -29,8 +29,8 @@ omega = (sqrt((mu.earth + mu.moon + mu.sun)/dis.sun^3));
 mu1 = 328900.56^-1; % From NASA
 r0 = [.98900883730044109; 0; 0.000802140914099732]*dis.sun;
 v0 = [0; 0.010697471710460349-2.895683e-3; 0] * dis.sun * omega;
-w0 = [2; 1; 2.5] * pi()/180; % initial angular velocity
-% w0 = [0 ; 0; omega];
+% w0 = [2; 1; 2.5] * pi()/180; % initial angular velocity
+w0 = [omega ; omega/100; omega/100];
 % w0 = [.01; 2; .01] * pi()/180; % initial angular velocity
 
 % DCM =[.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .875426];
