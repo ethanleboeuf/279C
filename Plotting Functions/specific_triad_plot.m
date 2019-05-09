@@ -1,7 +1,7 @@
 function specific_triad_plot(x, y , z, triad_name)
 n = size(x,2);
 figure('units','normalized','outerposition',[0 0 1 1])
-incr = floor(n/100);
+incr = ceil(n/100);
 for ii = 1:incr: n
     if ii == 1
         quiver3(0, 0, 0, x(1,ii), x(2,ii), x(3,ii), 'r','LineWidth',2)
@@ -18,9 +18,9 @@ for ii = 1:incr: n
     end
 
 end
-quiver3(0,0,0,1,0,0,'k','LineWidth',5)
-quiver3(0,0,0,0,1,0,'k','LineWidth',5,'HandleVisibility','off')
-quiver3(0,0,0,0,0,1,'k','LineWidth',5,'HandleVisibility','off')
+quiver3(0,0,0,1,0,0,'k','LineWidth',1)
+quiver3(0,0,0,0,1,0,'k','LineWidth',1,'HandleVisibility','off')
+quiver3(0,0,0,0,0,1,'k','LineWidth',1,'HandleVisibility','off')
 title_str = [triad_name, ' axes over time'];
 title(title_str)        
 xlabel('I')

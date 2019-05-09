@@ -46,35 +46,35 @@ magM = zeros(n, 1);
 for ii = 1:n
     magM(ii) = norm(M(ii, :));
 end
-plot(t/3600/24, magM)
+plot(t, magM)
 hold on
 grid on
-xlabel('Time, days')
+xlabel('time, s')
 ylabel('Gravity Gradient Torque, Nm')
 title('Gravity Gradient Torque over one Orbit around L1')
 hold off
 
 figure()
 subplot(3,1,1)
-plot(t/3600/24, M(:, 1), 'k', 'LineWidth', 3)
+plot(t, M(:, 1), 'k', 'LineWidth', 3)
 hold on
-xlabel('time, days')
+xlabel('time, s')
 ylabel('M_x, Nm')
 grid on
 hold off
 
 subplot(3,1,2)
-plot(t/3600/24, M(:, 2), 'k', 'LineWidth', 3)
+plot(t, M(:, 2), 'k', 'LineWidth', 3)
 hold on
-xlabel('time, days')
+xlabel('time, s')
 ylabel('M_y, Nm')
 grid on
 hold off
 
 subplot(3,1,3)
-plot(t/3600/24, M(:, 3), 'k', 'LineWidth', 3)
+plot(t, M(:, 3), 'k', 'LineWidth', 3)
 hold on
-xlabel('time, days')
+xlabel('time, s')
 ylabel('M_z, Nm')
 grid on
 hold off
