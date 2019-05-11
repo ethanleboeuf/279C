@@ -10,7 +10,6 @@ Ix_sat = I_vec(1);
 Iy_sat = I_vec(2);
 Iz_sat = I_vec(3);
 % Convert sc struct to arrays
-subsections = fieldnames(sc);
 subsections = {'rect';'base';'fuel';'sp1';'sp2'};
 count = 1;
 for subsect = subsections'
@@ -30,11 +29,12 @@ mu1 = 328900.56^-1; % From NASA
 r0 = [.98900883730044109; 0; 0.000802140914099732]*dis.sun;
 v0 = [0; 0.010697471710460349-2.895683e-3; 0] * dis.sun * omega;
 % w0 = [2; 1; 2.5] * pi()/180; % initial angular velocity
-w0 = [omega ; omega/100; omega/100];
+w0 = [omega/100 ; omega; omega/100];
 % w0 = [.01; 2; .01] * pi()/180; % initial angular velocity
 
 % DCM =[.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .875426];
-DCM = [0.999999671094767 0 -8.110550887097017e-04; 0 1 0; 8.110550887097016e-04 0 0.999999671094768];
+DCM = sc.R'*[-1 0 0; 0 -1 0; 0 0 1];
+% DCM = [0.999999671094767 0 -8.110550887097017e-04; 0 1 0; 8.110550887097016e-04 0 0.999999671094768];
 %% Gravity Gradient Torque
 
 % I made some changes in here. I included sun and earth positions in the
@@ -43,7 +43,7 @@ DCM = [0.999999671094767 0 -8.110550887097017e-04; 0 1 0; 8.110550887097016e-04 
 % mass ratio type thing
 
 
-sim('SOHO_sim_v5.slx')
+sim('SOHO_sim_v6_fixes_temp.slx')
 size = length(Inert_pos_out);
 x = Inert_pos_out(:,1);
 y = Inert_pos_out(:,2);

@@ -11,7 +11,7 @@ n = length(t);
 % specific_triad_plot(R, T , N, 'RTN')
 % 
 [A] = out2mat(dcm_out(:, 1:9));
-A_nom = out2mat(dcm_nom_out(:, 1:9));
+A_nom = out2mat(DCM_nom(:, 1:9));
 Err_mat = zeros(3,3,n);
 for ii = 1:n
     Err_mat(:,:,ii) = A(:, :, ii) * A_nom(:, :, ii)';
@@ -41,40 +41,40 @@ axes_plot(Err_mat, sc)
 % zlabel('K')
 % hold off
 
-figure()
-magM = zeros(n, 1);
-for ii = 1:n
-    magM(ii) = norm(M(ii, :));
-end
-plot(t, magM)
-hold on
-grid on
-xlabel('time, s')
-ylabel('Gravity Gradient Torque, Nm')
-title('Gravity Gradient Torque over one Orbit around L1')
-hold off
-
-figure()
-subplot(3,1,1)
-plot(t, M(:, 1), 'k', 'LineWidth', 3)
-hold on
-xlabel('time, s')
-ylabel('M_x, Nm')
-grid on
-hold off
-
-subplot(3,1,2)
-plot(t, M(:, 2), 'k', 'LineWidth', 3)
-hold on
-xlabel('time, s')
-ylabel('M_y, Nm')
-grid on
-hold off
-
-subplot(3,1,3)
-plot(t, M(:, 3), 'k', 'LineWidth', 3)
-hold on
-xlabel('time, s')
-ylabel('M_z, Nm')
-grid on
-hold off
+% figure()
+% magM = zeros(n, 1);
+% for ii = 1:n
+%     magM(ii) = norm(M(ii, :));
+% end
+% plot(t, magM)
+% hold on
+% grid on
+% xlabel('time, s')
+% ylabel('Gravity Gradient Torque, Nm')
+% title('Gravity Gradient Torque over one Orbit around L1')
+% hold off
+% 
+% figure()
+% subplot(3,1,1)
+% plot(t, M(:, 1), 'k', 'LineWidth', 3)
+% hold on
+% xlabel('time, s')
+% ylabel('M_x, Nm')
+% grid on
+% hold off
+% 
+% subplot(3,1,2)
+% plot(t, M(:, 2), 'k', 'LineWidth', 3)
+% hold on
+% xlabel('time, s')
+% ylabel('M_y, Nm')
+% grid on
+% hold off
+% 
+% subplot(3,1,3)
+% plot(t, M(:, 3), 'k', 'LineWidth', 3)
+% hold on
+% xlabel('time, s')
+% ylabel('M_z, Nm')
+% grid on
+% hold off

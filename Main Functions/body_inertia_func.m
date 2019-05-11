@@ -124,7 +124,8 @@ I_b_cm = [I_x_cm,-I_xy_cm,-I_xz_cm;-I_yx_cm,I_y_cm,-I_yz_cm;-I_zx_cm,-I_zy_cm,I_
 %% Principal Axes Inertia Tensor
 [R,I_p] = eig(I_b_cm); % R - eigenvectors/rotation matrix, D - eigenvalues/inertia tensor principal axes
 
-
+R = [R(:,2) R(:,1) R(:,3)];
+I_p = [I_p(2,2) 0 0; 0 I_p(1,1) 0; 0 0 I_p(3,3)];
 sc.R = R;
 sc.Ip = I_p;
 sc.Ib_cm = I_b_cm;
