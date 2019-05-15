@@ -19,6 +19,10 @@ for ii = 1:n
     Err_mat(:,:,ii) = A(:,:,ii)' * DCM_det(:, :, ii);
     
 end
+set(0,'DefaultLineMarkerSize',15)
+set(0,'DefaultAxesFontSize',22)
+set(0,'DefaultTextFontSize',26)
+set(0,'DefaultLineLineWidth',1.5)
 axes_plot(Err_mat, sc)
 % w_out = dcm_out(:, 10:12)';
 % ang_momentum_I_plot(w_out, sc, A)
