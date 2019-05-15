@@ -5,6 +5,7 @@ close all
 
 sc = init_sc();
 sc = body_inertia_func(sc);
+Rot = sc.R;
 I_vec = [sc.Ip(1,1); sc.Ip(2,2); sc.Ip(3,3)];
 Ix_sat = I_vec(1);
 Iy_sat = I_vec(2);
@@ -30,7 +31,8 @@ r0 = [.98900883730044109; 0; 0.000802140914099732]*dis.sun;
 v0 = [0; 0.010697471710460349-2.895683e-3; 0] * dis.sun * omega;
 
 % w0 = [2; 1; 2.5] * pi()/180; % initial angular velocity
-w0 = [omega/100 ; omega; omega/100];
+% w0 = [omega/100 ; omega; omega/100];
+w0 = [0.2; 2; 0.2];
 
 % DCM =[.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .875426];
 DCM = sc.R'*[-1 0 0; 0 -1 0; 0 0 1];
@@ -41,7 +43,8 @@ DCM = sc.R'*[-1 0 0; 0 -1 0; 0 0 1];
 % 0 = deterministic att det
 % 1 = q method
 % 2 = angular velocity and kinematic equations
-att_det_method = 1;
-
+att_det_method = 0;
+q0 = DCM_to_quat(DCM);
+acc_gyro = 0.001 * pi/180 / 60 / 60; %0.001 deg/hr (SMAD) - will need to make this bigger to see any change
 
 sim('SOHO_sim_v7.slx')

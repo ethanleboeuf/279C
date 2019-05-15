@@ -13,8 +13,10 @@ n = length(t);
 [A] = out2mat(dcm_out(:, 1:9));
 A_nom = out2mat(DCM_nom(:, 1:9));
 Err_mat = zeros(3,3,n);
+% A_omega = out2mat(omega_det(:, 1:9));
+A_omega = quat_to_DCM(omega_det(:, 1:4)');
 for ii = 1:n
-    Err_mat(:,:,ii) = A(:, :, ii) * A_nom(:, :, ii)';
+    Err_mat(:,:,ii) = A(:,:,ii)' * A_omega(:, :, ii);
     
 end
 axes_plot(Err_mat, sc)

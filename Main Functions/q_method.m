@@ -8,14 +8,16 @@ S = B' + B;
 Z = [B(2,3) - B(3,2); B(3,1) - B(1,3); B(1,2) - B(2,1)];
 sig = trace(B);
 
-K = [S - ones(3,1) * sig Z; Z' sig];
+K = [S-eye(3)*sig, Z; Z', sig];
 
 [vec, D] = eig(K);
-
+vec = real(vec);
+D = real(D);
 [max_num,max_idx] = max(D(:));
 [X Y]=ind2sub(size(D),max_idx);
 
 q = vec(:, X);
+% q = [1;0;0;0];
 A = quat_to_DCM(q);
 end
 
