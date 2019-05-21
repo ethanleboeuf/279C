@@ -45,6 +45,11 @@ DCM = sc.R'*[-1 0 0; 0 -1 0; 0 0 1];
 % 2 = angular velocity and kinematic equations
 att_det_method = 0;
 q0 = DCM_to_quat(DCM);
-acc_gyro = 0.001 * pi/180 / 60 / 60; %0.001 deg/hr (SMAD) - will need to make this bigger to see any change
+acc_gyro_bias = 0.5 * pi/180 / 60 / 60; % 0.003 to 1 deg/hr (SMAD) - will need to make this bigger to see any change
+acc_gyro = 0.01 * pi/180 / 60 / 60; 
+sun_err_bias = 1 * pi/180; % 0.005 to 3 deg, sun sensor error (SMAD)
+sun_err_var = .01 * pi/180;
+star_err_bias = 0.001 * pi/180; % 0.0003 to 0.01 deg, star tracker error (SMAD)
+star_err_var = 0.0005 * pi/180;
 
 sim('SOHO_sim_v7.slx')
