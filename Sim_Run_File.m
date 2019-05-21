@@ -52,4 +52,19 @@ sun_err_var = .01 * pi/180;
 star_err_bias = 0.001 * pi/180; % 0.0003 to 0.01 deg, star tracker error (SMAD)
 star_err_var = 0.0005 * pi/180;
 
-sim('SOHO_sim_v7.slx')
+
+%% Generate Random Noise and Run Sim
+end_time = 3600;
+dt = 0.5;
+num_noise = ceil(end_time / 10);
+sun_noise = mvnrnd(zeros(num_noise, 3), sun_err_var*eye(3))';
+star_noise = mvnrnd(zeros(num_noise, 3), star_err_var*eye(3))';
+gyro_noise = mvnrnd(zeros(num_noise, 3), acc_gyro * eye(3))';
+
+
+
+
+
+
+
+sim('SOHO_sim_v9.slx')
