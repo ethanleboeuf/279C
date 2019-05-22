@@ -63,8 +63,4 @@ gyro_noise = mvnrnd(zeros(num_noise, 3), 0 * eye(3))';
 
 
 
-
-
-
-
-sim('SOHO_sim_v9.slx')
+sim('SOHO_sim_v10.slx')
