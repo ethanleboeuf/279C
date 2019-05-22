@@ -54,13 +54,13 @@ star_err_var = 0.0005 * pi/180;
 
 
 %% Generate Random Noise and Run Sim
-end_time = 1000;
-dt = 0.5;
+end_time = 100;
+dt = 0.1;
 num_noise = ceil(end_time / 10);
-sun_noise = mvnrnd(zeros(num_noise, 3), 0*eye(3))';
-star_noise = mvnrnd(zeros(num_noise, 3), 0*eye(3))';
-gyro_noise = mvnrnd(zeros(num_noise, 3), 0 * eye(3))';
+sun_noise = mvnrnd(zeros(num_noise, 3), .01*eye(3))';
+star_noise = mvnrnd(zeros(num_noise, 3), .001*eye(3))';
+gyro_noise = mvnrnd(zeros(num_noise, 3), .00001* eye(3))';
 
 
 
-sim('SOHO_sim_v10.slx')
+sim('SOHO_sim_v11.slx')
