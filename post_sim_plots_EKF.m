@@ -1,78 +1,100 @@
 %% Plotting Results from Sim with EKF
 close all
 n = length(t);
-A_EKF = quat_to_DCM(mu_EKF(:, 1:4)');
-[A] = out2mat(dcm_out(:, 1:9));
-A_nom = out2mat(DCM_nom(:, 1:9));
-Err_mat = zeros(3,3,n);
-% A_omega = out2mat(omega_det(:, 1:9));
-A_omega = quat_to_DCM(omega_det(:, 1:4)');
-for ii = 1:n
-    Err_mat(:,:,ii) = A(:,:,ii) * A_EKF(:, :, ii)';
-    
-end
-set(0,'DefaultLineMarkerSize',15)
-set(0,'DefaultAxesFontSize',22)
-set(0,'DefaultTextFontSize',26)
-set(0,'DefaultLineLineWidth',1.5)
-axes_plot(Err_mat, sc)
-% w_out = dcm_out(:, 10:12)';
-% ang_momentum_I_plot(w_out, sc, A)
-% ang_velocity_I_plot(w_out, A, sc)
-% axes_plot(A, sc)
-% 
-% figure(2)
-% unit_sun = zeros(3, n);
-% for ii = 1 : n
-%     unit_sun(1:3, ii) = Inert_pos_out(ii, 4:6)/norm(Inert_pos_out(ii, 4:6));
-% end
-% hold on
-% scatter(unit_sun(1, :), unit_sun(2, :), 'k', 'filled')
-% hold off
-% figure()
-% scatter3(Inert_pos_out(1:10:end,1), Inert_pos_out(1:10:end,2), Inert_pos_out(1:10:end,3), '.', 'b')
-% hold on 
-% scatter3(Inert_pos_out(1:10:end,4), Inert_pos_out(1:10:end,5), Inert_pos_out(1:10:end,6), '.', 'r')
-% scatter3(Inert_pos_out(1:10:end,7), Inert_pos_out(1:10:end,8), Inert_pos_out(1:10:end,9), '.', 'g')
-% xlabel('I')
-% ylabel('J')
-% zlabel('K')
-% hold off
+set(0,'DefaultLineMarkerSize',5)
 
-% figure()
-% magM = zeros(n, 1);
-% for ii = 1:n
-%     magM(ii) = norm(M(ii, :));
+mu_EKF(:, 1:4) = quat_corr(mu_EKF(:,1:4));
+mu_p(:, 1:4) = quat_corr(mu_p(:, 1:4));
+q_det = quat_corr(q_det);
+[q] = quat_corr(q_out(:, 1:4));
+for ii = 1:size(mu_EKF, 1)
+    z(:,:,ii) = error_ellipse(0, sigma_EKF(4,4,ii), .95);
+    z_high(ii) = max(z(2, :, ii)) + mu_EKF(ii, 4);
+    z_min(ii) = min(z(2, :, ii))+ mu_EKF(ii, 4);
+end
+
+figure()
+subplot(4,1,1)
+plot([t; t(end)+dt], [NaN; mu_EKF(:, 1)])
+hold on
+plot(t, q(:, 1),'--')
+% plot(t(2:end), q_det(1:end-1, 1), 'b:')
+grid on
+legend('Estimate', 'Ground Truth', 'location','ne')
+title('q_1 vs time')
+xlabel('time, seconds')
+ylabel('quaternion')
+hold off
+
+
+subplot(4,1,2)
+plot([t; t(end)+dt], [NaN; mu_EKF(:, 2)])
+hold on
+plot(t, q(:, 2),'--')
+% plot(t(2:end), q_det(1:end-1, 2), 'b:')
+grid on
+title('q_2 vs time')
+xlabel('time, seconds')
+ylabel('quaternion')
+hold off
+
+subplot(4,1,3)
+plot([t; t(end)+dt], [NaN; mu_EKF(:, 3)])
+hold on
+plot(t, q(:, 3),'--')
+% plot(t(2:end), q_det(1:end-1, 3), 'b:' )
+grid on
+title('q_3 vs time')
+xlabel('time, seconds')
+ylabel('quaternion')
+hold off
+
+subplot(4,1,4)
+plot([t; t(end)+dt], [NaN; mu_EKF(:, 4)])
+hold on
+plot(t, q(:, 4),'--')
+% plot(t(2:end), q_det(1:end-1, 4), 'b:')
+grid on
+title('q_4 vs time')
+xlabel('time, seconds')
+ylabel('quaternion')
+hold off
+
+
+
+figure()
+scatter([t; t(end)+dt], [NaN; mu_p(:, 4)], 'filled')
+hold on
+scatter([t; t(end)+dt], [NaN; mu_EKF(:, 4)], 'filled')
+plot(t, q(:, 4), 'k')
+% plot(t, q_det(:, 4), 'b')
+plot(t(2:end), z_high(1:end-1), 'b', 'HandleVisibility', 'off')
+plot(t(2:end), z_min(1:end-1), 'b')
+% for ii = 1:size(z, 3)-1
+%     plot(z(1, :, ii) + t(ii+1), z(2, :, ii) + mu_EKF(ii,4))
 % end
-% plot(t, magM)
-% hold on
-% grid on
-% xlabel('time, s')
-% ylabel('Gravity Gradient Torque, Nm')
-% title('Gravity Gradient Torque over one Orbit around L1')
-% hold off
-% 
-% figure()
-% subplot(3,1,1)
-% plot(t, M(:, 1), 'k', 'LineWidth', 3)
-% hold on
-% xlabel('time, s')
-% ylabel('M_x, Nm')
-% grid on
-% hold off
-% 
-% subplot(3,1,2)
-% plot(t, M(:, 2), 'k', 'LineWidth', 3)
-% hold on
-% xlabel('time, s')
-% ylabel('M_y, Nm')
-% grid on
-% hold off
-% 
-% subplot(3,1,3)
-% plot(t, M(:, 3), 'k', 'LineWidth', 3)
-% hold on
-% xlabel('time, s')
-% ylabel('M_z, Nm')
-% grid on
-% hold off
+grid on
+xlabel('time, seconds')
+ylabel('q_4')
+legend('Pre-fit', 'Post-fit', 'Ground Truth', '95% Confidence Bound')
+hold off
+
+figure()
+plot(t(2:end), abs(mu_p(1:end-1, 4) - q(2:end, 4)))
+hold on
+plot(t(2:end), abs(q_det(1:end-1, 4) - q(2:end, 4)))
+xlabel('time, seconds')
+ylabel('Absolute Error')
+if att_det_method == 1
+    legend('EKF', 'q - method')
+else
+    legend('EKF', 'Deterministic Method')
+end
+hold off
+
+figure()
+plot(t(2:end), abs(mu_p(1:end-1, 4) - q(2:end, 4)) -abs(q_det(1:end-1, 4) - q(2:end, 4)) )
+hold on
+xlabel('time, seconds')
+ylabel('Absolute Error')
+hold off
