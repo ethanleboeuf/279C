@@ -98,3 +98,10 @@ hold on
 xlabel('time, seconds')
 ylabel('Absolute Error')
 hold off
+
+figure()
+plot(t, q_out(:, 5))
+hold on
+plot(t, mu_p(:, 5))
+hold off
+
