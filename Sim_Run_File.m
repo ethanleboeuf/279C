@@ -66,6 +66,13 @@ sun_noise = mvnrnd(zeros(num_noise, 3), sun_err_var*eye(3))';
 star_noise = mvnrnd(zeros(num_noise, 3), star_err_var*eye(3))';
 gyro_noise = mvnrnd(zeros(num_noise, 3), acc_gyro* eye(3))';
 
+%% Actuator Model
+% 3 RW with x,y,z + 1 RW with trisectrix
+Astar_RW = [5/6 -1/6 -1/6;-1/6 5/6 -1/6;-1/6 -1/6 5/6;sqrt(3)/2 sqrt(3)/2 sqrt(3)/2];
+A_RW = [1 0 0 1/sqrt(3);0 1 0 1/sqrt(3);0 0 1 1/sqrt(3)];
+I_w = 2*eye(4); % Reaction wheels moments of inertia
+RW_err = 0.1;
+RW_noise = mvnrnd(zeros(num_noise, 4), RW_err* eye(4))';
 
 
 sim('SOHO_sim_v11.slx')
