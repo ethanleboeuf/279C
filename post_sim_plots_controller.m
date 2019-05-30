@@ -72,27 +72,24 @@ title('Ground Truth and Nominal Quaternions over Time')
 hold off
 % axes_plot(DCM_err, sc)
 
-t_plot = t(1:1000);
-M_act_plot = M_act(1:1000,:);
-Mc_act_out_plot = Mc_act_out(1:1000,:);
+t_plot = t(1:end);
+M_act_plot = M_act(1:end,:);
+Mc_act_out_plot = Mc_act_out(1:end,:);
 
 figure
 subplot(3,1,1)
-plot(t_plot,M_act_plot(:,1),'-',t_plot,Mc_act_out_plot(:,1),'-')
-legend('Desired M_cx','Output M_cx')
-xlabel('Time (seconds)')
-ylabel('M_cx')
+plot(t_plot,Mc_act_out_plot(:,1),'-',t_plot,M_act_plot(:,1),'-')
+xlabel('Time [s]')
+ylabel('M_cx [N]')
 %axis([0 20000 -5 5])
 subplot(3,1,2)
-plot(t_plot,M_act_plot(:,2),'-',t_plot,Mc_act_out_plot(:,2),'-')
-legend('Desired M_cy','Output M_cy')
-xlabel('Time (seconds)')
-ylabel('M_cy')
+plot(t_plot,Mc_act_out_plot(:,2),'-',t_plot,M_act_plot(:,2),'-')
+xlabel('Time [s]')
+ylabel('M_cy [N]')
 %axis([0 20000 -5 5])
 subplot(3,1,3)
-plot(t_plot,M_act_plot(:,3),'-',t_plot,Mc_act_out_plot(:,3),'-')
-legend('Desired M_cz','Output M_cz')
-xlabel('Time (seconds)')
-ylabel('M_cz')
-%sgtitle('Desired vs. Output Torque')
+plot(t_plot,Mc_act_out_plot(:,3),'-',t_plot,M_act_plot(:,3),'-')
+xlabel('Time [s]')
+ylabel('M_cz [N]')
+sgtitle(['{\color{orange}Input Torque} and {\color{blue}Output Torque} vs. Time'],'fontsize',24)
 %axis([0 20000 -5 5])
