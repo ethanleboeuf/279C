@@ -62,3 +62,28 @@ figure()
 plot(t, q_out(:, 7))
 
 % axes_plot(DCM_err, sc)
+
+t_plot = t(1:1000);
+M_act_plot = M_act(1:1000,:);
+Mc_act_out_plot = Mc_act_out(1:1000,:);
+
+figure
+subplot(3,1,1)
+plot(t_plot,M_act_plot(:,1),'-',t_plot,Mc_act_out_plot(:,1),'-')
+legend('Desired $M_cx$','Output $M_cx$','Interpreter','latex')
+xlabel('Time (seconds)','Interpreter','latex')
+ylabel('$M_cx$','Interpreter','latex')
+%axis([0 20000 -5 5])
+subplot(3,1,2)
+plot(t_plot,M_act_plot(:,2),'-',t_plot,Mc_act_out_plot(:,2),'-')
+legend('Desired $M_cy$','Output $M_cy$','Interpreter','latex')
+xlabel('Time (seconds)','Interpreter','latex')
+ylabel('$M_cy$','Interpreter','latex')
+%axis([0 20000 -5 5])
+subplot(3,1,3)
+plot(t_plot,M_act_plot(:,3),'-',t_plot,Mc_act_out_plot(:,3),'-')
+legend('Desired $M_cz$','Output $M_cz$','Interpreter','latex')
+xlabel('Time (seconds)','Interpreter','latex')
+ylabel('$M_cz$','Interpreter','latex')
+%sgtitle('Desired vs. Output Torque')
+%axis([0 20000 -5 5])
