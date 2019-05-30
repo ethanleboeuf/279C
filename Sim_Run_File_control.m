@@ -30,9 +30,9 @@ mu1 = 328900.56^-1; % From NASA
 r0 = [.98900883730044109; 0; 0.000802140914099732]*dis.sun;
 v0 = [0; 0.010697471710460349-2.895683e-3; 0] * dis.sun * omega;
 
-w0 = [3; 2; 2.5] * pi()/180; % initial angular velocity
+% w0 = [3; 2; 2.5] * pi()/180; % initial angular velocity
 % w0 = [omega/100 ; omega; omega/100];
-% w0 = [3; 0.2; 0.2]*pi/180;
+w0 = [5; 5; 5]*pi/180;
 
 % DCM =[.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .875426];
 % DCM = sc.R'*[-1 0 0; 0 -1 0; 0 0 1];
@@ -44,7 +44,7 @@ DCM = sc.R'*[-1 0 0; 0 -1 0; 0 0 1];
 % 0 = deterministic att det
 % 1 = q method
 % 2 = angular velocity and kinematic equations
-att_det_method = 0;
+att_det_method = 1;
 q0 = DCM_to_quat(DCM);
 acc_gyro_bias = 0.5 * pi/180 / 60 / 60; % 0.003 to 1 deg/hr (SMAD) - will need to make this bigger to see any change
 acc_gyro = 0.01 * pi/180 / 60 / 60; 
@@ -59,7 +59,7 @@ star_err_var = 0.0005 * pi/180;
 
 
 %% Generate Random Noise and Run Sim
-end_time = 2000;
+end_time = 1000;
 dt = .1;
 % num_noise = ceil(end_time / 10);
 num_noise = 1000;
