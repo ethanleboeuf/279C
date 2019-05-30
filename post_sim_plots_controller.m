@@ -47,7 +47,7 @@ hold off
 figure()
 plot(t, M_act(:,1), t, M_act(:,2), t, M_act(:,3))
 hold on
-legend('x','y','z')
+legend('M_{cx}','M_{cz}','M_{cy}')
 xlabel('time, seconds')
 ylabel('M_c, Nm')
 title('Control Torques over Time')
