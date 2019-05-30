@@ -59,7 +59,7 @@ star_err_var = 0.0005 * pi/180;
 
 
 %% Generate Random Noise and Run Sim
-end_time = 1000;
+end_time = 2000;
 dt = .1;
 % num_noise = ceil(end_time / 10);
 num_noise = 1000;
@@ -72,11 +72,11 @@ gyro_noise = mvnrnd(zeros(num_noise, 3), acc_gyro* eye(3))';
 % kd = 2 * sqrt(Iy_sat * (1e-6 + kp));
 %% Actuator Model
 % 3 RW with x,y,z + 1 RW with trisectrix
-Astar_RW = [5/6 -1/6 -1/6;-1/6 5/6 -1/6;-1/6 -1/6 5/6;sqrt(3)/2 sqrt(3)/2 sqrt(3)/2];
+Astar_RW = [5/6 -1/6 -1/6;-1/6 5/6 -1/6;-1/6 -1/6 5/6;sqrt(3)/6 sqrt(3)/6 sqrt(3)/6];
 A_RW = [1 0 0 1/sqrt(3);0 1 0 1/sqrt(3);0 0 1 1/sqrt(3)];
 I_w = 2*eye(4); % Reaction wheels moments of inertia
-RW_err = 0.01 * pi/180 / 60 / 60;
+RW_err = 0.0001;
 RW_noise = mvnrnd(zeros(num_noise, 4), RW_err* eye(4))';
 
 
-sim('SOHO_sim_vcontrol.slx')
+sim('SOHO_sim_vcontrol_actuator.slx')
