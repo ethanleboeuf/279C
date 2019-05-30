@@ -59,7 +59,7 @@ star_err_var = 0.0005 * pi/180;
 
 
 %% Generate Random Noise and Run Sim
-end_time = 1000;
+end_time = 2000;
 dt = .1;
 % num_noise = ceil(end_time / 10);
 num_noise = 1000;
