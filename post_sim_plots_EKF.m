@@ -15,7 +15,7 @@ end
 
 figure()
 subplot(4,1,1)
-plot([t; t(end)+dt], [NaN; mu_EKF(:, 1)])
+plot([t], [mu_EKF(:, 1)])
 hold on
 plot(t, q(:, 1),'--')
 % plot(t(2:end), q_det(1:end-1, 1), 'b:')
@@ -28,7 +28,7 @@ hold off
 
 
 subplot(4,1,2)
-plot([t; t(end)+dt], [NaN; mu_EKF(:, 2)])
+plot([t], [mu_EKF(:, 2)])
 hold on
 plot(t, q(:, 2),'--')
 % plot(t(2:end), q_det(1:end-1, 2), 'b:')
@@ -39,7 +39,7 @@ ylabel('quaternion')
 hold off
 
 subplot(4,1,3)
-plot([t; t(end)+dt], [NaN; mu_EKF(:, 3)])
+plot([t], [mu_EKF(:, 3)])
 hold on
 plot(t, q(:, 3),'--')
 % plot(t(2:end), q_det(1:end-1, 3), 'b:' )
@@ -50,7 +50,7 @@ ylabel('quaternion')
 hold off
 
 subplot(4,1,4)
-plot([t; t(end)+dt], [NaN; mu_EKF(:, 4)])
+plot([t], [mu_EKF(:, 4)])
 hold on
 plot(t, q(:, 4),'--')
 % plot(t(2:end), q_det(1:end-1, 4), 'b:')
@@ -63,13 +63,15 @@ hold off
 
 
 figure()
-scatter([t; t(end)+dt], [NaN; mu_p(:, 4)], 'filled')
+% scatter([t; t(end)+dt], [NaN; mu_p(:, 4)], 'filled')
+scatter([t], [mu_p(:, 4)], 'filled')
 hold on
-scatter([t; t(end)+dt], [NaN; mu_EKF(:, 4)], 'filled')
+% scatter([t; t(end)+dt], [NaN; mu_EKF(:, 4)], 'filled')
+scatter([t], [mu_EKF(:, 4)], 'filled')
 plot(t, q(:, 4), 'k')
 % plot(t, q_det(:, 4), 'b')
-plot(t(2:end), z_high(1:end-1), 'b', 'HandleVisibility', 'off')
-plot(t(2:end), z_min(1:end-1), 'b')
+plot(t(1:end), z_high(1:end), 'b', 'HandleVisibility', 'off')
+plot(t(1:end), z_min(1:end), 'b')
 % for ii = 1:size(z, 3)-1
 %     plot(z(1, :, ii) + t(ii+1), z(2, :, ii) + mu_EKF(ii,4))
 % end
@@ -80,9 +82,9 @@ legend('Pre-fit', 'Post-fit', 'Ground Truth', '95% Confidence Bound')
 hold off
 
 figure()
-plot(t(2:end), abs(mu_p(1:end-1, 4) - q(2:end, 4)))
+plot(t(1:end), abs(mu_p(1:end, 4) - q(1:end, 4)))
 hold on
-plot(t(2:end), abs(q_det(1:end-1, 4) - q(2:end, 4)))
+plot(t(1:end), abs(q_det(1:end, 4) - q(1:end, 4)))
 xlabel('time, seconds')
 ylabel('Absolute Error')
 if att_det_method == 1
@@ -93,7 +95,7 @@ end
 hold off
 
 figure()
-plot(t(2:end), abs(mu_p(1:end-1, 4) - q(2:end, 4)) -abs(q_det(1:end-1, 4) - q(2:end, 4)) )
+plot(t(1:end), abs(mu_p(1:end, 4) - q(1:end, 4)) -abs(q_det(1:end, 4) - q(1:end, 4)) )
 hold on
 xlabel('time, seconds')
 ylabel('Absolute Error')
