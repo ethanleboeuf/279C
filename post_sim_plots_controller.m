@@ -75,7 +75,7 @@ hold off
 % t_plot = t(1:1000);
 % M_act_plot = M_act(1:1000,:);
 % Mc_act_out_plot = Mc_act_out(1:1000,:);
-% 
+%
 % figure
 % subplot(3,1,1)
 % plot(t_plot,M_act_plot(:,1),'-',t_plot,Mc_act_out_plot(:,1),'-')

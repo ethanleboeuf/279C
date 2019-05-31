@@ -79,4 +79,4 @@ RW_err = 0.0001;
 RW_noise = mvnrnd(zeros(num_noise, 4), RW_err* eye(4))';
 
 
-sim('SOHO_sim_vcontrol.slx')
+sim('SOHO_sim_vcontrol_actuator.slx')
