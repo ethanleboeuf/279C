@@ -7,6 +7,8 @@ mu_EKF(:, 1:4) = quat_corr(mu_EKF(:,1:4));
 mu_p(:, 1:4) = quat_corr(mu_p(:, 1:4));
 q_det = quat_corr(q_det);
 [q] = quat_corr(q_out(:, 1:4));
+
+t_EKF = t(1:(dt_EKF/dt):end);
 for ii = 1:size(mu_EKF, 1)
     z4(:,:,ii) = error_ellipse(0, sigma_EKF(4,4,ii), .95);
     z_high4(ii) = max(z4(2, :, ii)) + mu_EKF(ii, 4);
@@ -27,7 +29,7 @@ end
 
 figure()
 subplot(4,1,1)
-plot([t], [mu_EKF(:, 1)])
+plot(t_EKF, [mu_EKF(:, 1)])
 hold on
 plot(t, q(:, 1),'--')
 % plot(t(1:end), z_high1(1:end), 'b', 'HandleVisibility', 'off')
@@ -39,7 +41,7 @@ hold off
 
 
 subplot(4,1,2)
-plot([t], [mu_EKF(:, 2)])
+plot(t_EKF, [mu_EKF(:, 2)])
 hold on
 plot(t, q(:, 2),'--')
 % plot(t(2:end), q_det(1:end-1, 2), 'b:')
@@ -48,7 +50,7 @@ ylabel('q_2')
 hold off
 
 subplot(4,1,3)
-plot([t], [mu_EKF(:, 3)])
+plot(t_EKF, [mu_EKF(:, 3)])
 hold on
 plot(t, q(:, 3),'--')
 % plot(t(2:end), q_det(1:end-1, 3), 'b:' )
@@ -57,7 +59,7 @@ ylabel('q_3')
 hold off
 
 subplot(4,1,4)
-plot([t], [mu_EKF(:, 4)])
+plot(t_EKF, [mu_EKF(:, 4)])
 hold on
 plot(t, q(:, 4),'--')
 % plot(t(2:end), q_det(1:end-1, 4), 'b:')
@@ -72,14 +74,14 @@ hold off
 
 figure()
 % scatter([t; t(end)+dt], [NaN; mu_p(:, 4)], 'filled')
-scatter([t], [mu_p(:, 4)], 'filled')
+scatter(t_EKF, [mu_p(:, 4)], 'filled')
 hold on
 % scatter([t; t(end)+dt], [NaN; mu_EKF(:, 4)], 'filled')
-scatter([t], [mu_EKF(:, 4)], 'filled')
+scatter(t_EKF, [mu_EKF(:, 4)], 'filled')
 plot(t, q(:, 4), 'k')
 % plot(t, q_det(:, 4), 'b')
-plot(t(1:end), z_high4(1:end), 'b', 'HandleVisibility', 'off')
-plot(t(1:end), z_min4(1:end), 'b')
+plot(t_EKF, z_high4(1:end), 'b', 'HandleVisibility', 'off')
+plot(t_EKF, z_min4(1:end), 'b')
 % for ii = 1:size(z, 3)-1
 %     plot(z(1, :, ii) + t(ii+1), z(2, :, ii) + mu_EKF(ii,4))
 % end
@@ -92,7 +94,7 @@ hold off
 figure()
 plot(t(1:end), abs(q_det(1:end, 4) - q(1:end, 4)))
 hold on
-plot(t(1:end), abs(mu_p(1:end, 4) - q(1:end, 4)))
+plot(t_EKF, abs(mu_EKF(1:end, 4) - q(1:(dt_EKF/dt):end, 4)))
 xlabel('time, seconds')
 ylabel('Absolute Error')
 if att_det_method == 1
@@ -102,16 +104,10 @@ else
 end
 hold off
 
-figure()
-plot(t(1:end), abs(mu_p(1:end, 4) - q(1:end, 4)) -abs(q_det(1:end, 4) - q(1:end, 4)) )
-hold on
-xlabel('time, seconds')
-ylabel('Absolute Error')
-hold off
 
 figure()
 plot(t, q_out(:, 5))
 hold on
-plot(t, mu_p(:, 5))
+plot(t_EKF, mu_p(:, 5))
 hold off
 
