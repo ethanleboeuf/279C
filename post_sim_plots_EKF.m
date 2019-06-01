@@ -4,7 +4,7 @@ n = length(t);
 set(0,'DefaultLineMarkerSize',5)
 
 mu_EKF(:, 1:4) = quat_corr(mu_EKF(:,1:4));
-mu_p(:, 1:4) = quat_corr(mu_p(:, 1:4));
+mu_p_EKF(:, 1:4) = quat_corr(mu_p_EKF(:, 1:4));
 q_det = quat_corr(q_det);
 [q] = quat_corr(q_out(:, 1:4));
 
@@ -74,7 +74,7 @@ hold off
 
 figure()
 % scatter([t; t(end)+dt], [NaN; mu_p(:, 4)], 'filled')
-scatter(t_EKF, [mu_p(:, 4)], 'filled')
+scatter(t_EKF, [mu_p_EKF(:, 4)], 'filled')
 hold on
 % scatter([t; t(end)+dt], [NaN; mu_EKF(:, 4)], 'filled')
 scatter(t_EKF, [mu_EKF(:, 4)], 'filled')
@@ -108,6 +108,6 @@ hold off
 figure()
 plot(t, q_out(:, 5))
 hold on
-plot(t_EKF, mu_p(:, 5))
+plot(t_EKF, mu_p_EKF(:, 5))
 hold off
 

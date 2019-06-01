@@ -59,10 +59,10 @@ star_err_var = 0.0005 * pi/180;
 
 
 %% Generate Random Noise and Run Sim
-end_time = 1000;
+end_time = 2000;
 dt = .25;
-dt_EKF = 10;
-dt_UKF = 10;
+dt_EKF = 5;
+dt_UKF = 5;
 % num_noise = ceil(end_time / 10);
 num_noise = 1000;
 sun_noise = mvnrnd(zeros(num_noise, 3), sun_err_var*eye(3))';
@@ -79,7 +79,34 @@ A_RW = [1 0 0 1/sqrt(3);0 1 0 1/sqrt(3);0 0 1 1/sqrt(3)];
 I_w = 2*eye(4); % Reaction wheels moments of inertia
 RW_err = 0.0001;
 RW_noise = mvnrnd(zeros(num_noise, 4), RW_err* eye(4))';
-
-
-sim('SOHO_sim_UKF.slx')
-sim('SOHO_sim_vcontrol.slx')
+% lambda_poss = [2 : .01 : 3];
+%% Running the Sim(s)
+lambda_poss = 2.92; % from iterating through
+err_mean = zeros(length(lambda_poss),1);
+for ii = 1:length(lambda_poss)
+    lambda = lambda_poss(ii);
+    tic
+    sim('SOHO_sim_UKF.slx')
+    toc
+    q_out_UKF = q_out;
+%     disp(lambda)
+%     mu_UKF(:, 1:4) = quat_corr(mu_UKF(:,1:4));
+%     [q] = quat_corr(q_out(1:dt_UKF/dt:end, 1:4));
+%     q = [q q_out(1:dt_UKF/dt:end, 5:7)];
+%     err_temp = zeros(size(mu_UKF,1),1);
+%     for jj = 1:size(mu_UKF, 1)
+%         err_temp(jj) = norm(mu_UKF(jj, :) - q(jj, :));
+%         err_mean(ii) = mean(err_temp);
+%     end
+end
+% figure()
+% plot(lambda_poss, err_mean)
+% hold on
+% xlabel('lambda for UKF')
+% ylabel('Mean Error to Ground Trurth')
+% title('Mean Error vs. Lambda Parameter for UKF')
+% hold off
+tic
+sim('SOHO_sim_EKF.slx')
+toc
+q_out_EKF = q_out;

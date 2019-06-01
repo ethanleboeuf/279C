@@ -1,5 +1,5 @@
 %% Plotting Results from Sim with UKF
-% close all
+close all
 n = length(t);
 set(0,'DefaultLineMarkerSize',5)
 
@@ -103,7 +103,7 @@ else
     legend('Deterministic Method', 'UKF')
 end
 hold off
-
+% err_mean = [err_mean mean(abs(mu_UKF(1:end, 4) - q(1:dt_UKF/dt:end, 4)))];
 
 figure()
 plot(t, q_out(:, 5))
