@@ -72,14 +72,18 @@ gyro_noise = mvnrnd(zeros(num_noise, 3), acc_gyro* eye(3))';
 %% Control Constants
 % kp = 0.1 ^ 2 / Iy_sat;
 % kd = 2 * sqrt(Iy_sat * (1e-6 + kp));
-%% Actuator Model
+%% Actuator Models
 % 3 RW with x,y,z + 1 RW with trisectrix
 Astar_RW = [5/6 -1/6 -1/6;-1/6 5/6 -1/6;-1/6 -1/6 5/6;sqrt(3)/6 sqrt(3)/6 sqrt(3)/6];
 A_RW = [1 0 0 1/sqrt(3);0 1 0 1/sqrt(3);0 0 1 1/sqrt(3)];
 I_w = 2*eye(4); % Reaction wheels moments of inertia
 RW_err = 0.0001;
 RW_noise = mvnrnd(zeros(num_noise, 4), RW_err* eye(4))';
+% 4 Thrusters
+th_err = 0.01;
+th_noise = mvnrnd(zeros(num_noise, 4), th_err* eye(4))';
+act_flag = 3; % determine which actuator to use (1 - RW, 2 - thruster, 3 - RW + thruster)
 
 
-sim('SOHO_sim_MEKF.slx')
+sim('SOHO_sim_EKF.slx')
 % sim('SOHO_sim_vcontrol.slx')
