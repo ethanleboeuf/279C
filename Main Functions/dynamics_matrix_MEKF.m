@@ -8,7 +8,7 @@ wz = w(3);
 
 w_cross = [0, wz, -wy;-wz, 0, wx;wy, -wx, 0];
 
-At = [w_cross, -1*eye(3)];
+At = [w_cross, -1*eye(3); zeros(3,6)];
 
 end
 
