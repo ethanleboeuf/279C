@@ -47,14 +47,14 @@ DCM = sc.R'*[-1 0 0; 0 -1 0; 0 0 1];
 att_det_method = 1;
 q0 = DCM_to_quat(DCM);
 acc_gyro_bias = 0.5 * pi/180 / 60 / 60; % 0.003 to 1 deg/hr (SMAD) - will need to make this bigger to see any change
-acc_gyro = 0.01 * pi/180 / 60 / 60; 
+acc_gyro = 0.01 * pi/180 / 60 / 60;
 sun_err_bias = 1 * pi/180; % 0.005 to 3 deg, sun sensor error (SMAD)
 sun_err_var = 0.01 * pi/180;
 star_err_bias = 0.001 * pi/180; % 0.0003 to 0.01 deg, star tracker error (SMAD)
 star_err_var = 0.0005 * pi/180;
 
 % sun_err_var = 1 * pi/180;
-% acc_gyro = 1 * pi/180 / 60 / 60; 
+% acc_gyro = 1 * pi/180 / 60 / 60;
 % star_err_var = 1 * pi/180;
 
 
@@ -72,15 +72,18 @@ gyro_noise = mvnrnd(zeros(num_noise, 3), acc_gyro* eye(3))';
 %% Control Constants
 % kp = 0.1 ^ 2 / Iy_sat;
 % kd = 2 * sqrt(Iy_sat * (1e-6 + kp));
-%% Actuator Model
+%% Actuator Models
 % 3 RW with x,y,z + 1 RW with trisectrix
 Astar_RW = [5/6 -1/6 -1/6;-1/6 5/6 -1/6;-1/6 -1/6 5/6;sqrt(3)/6 sqrt(3)/6 sqrt(3)/6];
 A_RW = [1 0 0 1/sqrt(3);0 1 0 1/sqrt(3);0 0 1 1/sqrt(3)];
 I_w = 2*eye(4); % Reaction wheels moments of inertia
 RW_err = 0.0001;
 RW_noise = mvnrnd(zeros(num_noise, 4), RW_err* eye(4))';
-lambda = 2.9;
+% 4 Thrusters
+th_err = 0.01;
+th_noise = mvnrnd(zeros(num_noise, 4), th_err* eye(4))';
+act_flag = 3; % determine which actuator to use (1 - RW, 2 - thruster, 3 - RW + thruster)
 
-sim('SOHO_sim_UKF.slx')
-q_out_UKF = q_out;
+
+sim('SOHO_sim_EKF_TD.slx')
 % sim('SOHO_sim_vcontrol.slx')
