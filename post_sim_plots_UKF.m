@@ -5,8 +5,8 @@ set(0,'DefaultLineMarkerSize',5)
 
 mu_UKF(:, 1:4) = quat_corr(mu_UKF(:,1:4));
 mu_p_UKF(:, 1:4) = quat_corr(mu_p_UKF(:, 1:4));
-q_det = quat_corr(q_det);
-[q] = quat_corr(q_out(:, 1:4));
+q_det = quat_corr(q_det_UKF);
+[q] = quat_corr(q_out_UKF(:, 1:4));
 
 t_UKF = t(1:(dt_UKF/dt):end);
 for ii = 1:size(mu_UKF, 1)

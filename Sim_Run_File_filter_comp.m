@@ -79,10 +79,12 @@ A_RW = [1 0 0 1/sqrt(3);0 1 0 1/sqrt(3);0 0 1 1/sqrt(3)];
 I_w = 2*eye(4); % Reaction wheels moments of inertia
 RW_err = 0.0001;
 RW_noise = mvnrnd(zeros(num_noise, 4), RW_err* eye(4))';
-% lambda_poss = [2 : .01 : 3];
+% lambda_poss = [2 : .25 : 4];
 %% Running the Sim(s)
 lambda_poss = 2.92; % from iterating through
 err_mean = zeros(length(lambda_poss),1);
+clearing_vars = who;
+% save('work_space_before')
 for ii = 1:length(lambda_poss)
     lambda = lambda_poss(ii);
     tic
@@ -96,15 +98,17 @@ for ii = 1:length(lambda_poss)
 %     err_temp = zeros(size(mu_UKF,1),1);
 %     for jj = 1:size(mu_UKF, 1)
 %         err_temp(jj) = norm(mu_UKF(jj, :) - q(jj, :));
-%         err_mean(ii) = mean(err_temp);
 %     end
+%     err_mean(ii) = mean(err_temp);
 end
+% 
 % figure()
 % plot(lambda_poss, err_mean)
 % hold on
-% xlabel('lambda for UKF')
+% xlabel('\lambda for UKF')
 % ylabel('Mean Error to Ground Trurth')
-% title('Mean Error vs. Lambda Parameter for UKF')
+% title('Mean Error vs. \lambda for UKF')
+% grid on
 % hold off
 tic
 sim('SOHO_sim_EKF.slx')

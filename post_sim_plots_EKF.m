@@ -5,8 +5,8 @@ set(0,'DefaultLineMarkerSize',5)
 
 mu_EKF(:, 1:4) = quat_corr(mu_EKF(:,1:4));
 mu_p_EKF(:, 1:4) = quat_corr(mu_p_EKF(:, 1:4));
-q_det = quat_corr(q_det);
-[q] = quat_corr(q_out(:, 1:4));
+q_det = quat_corr(q_det_EKF);
+[q] = quat_corr(q_out_EKF(:, 1:4));
 
 t_EKF = t(1:(dt_EKF/dt):end);
 for ii = 1:size(mu_EKF, 1)
@@ -106,8 +106,13 @@ hold off
 
 
 figure()
-plot(t, q_out(:, 5))
+plot(t, q_out(:, 5), 'k', t, q_out(:, 6), 'k', t, q_out(: ,7), 'k')
 hold on
-plot(t_EKF, mu_p_EKF(:, 5))
+plot(t_EKF, mu_EKF(:, 5),'--',t_EKF, mu_EKF(:, 6),'--', t_EKF, mu_EKF(:, 7),'--')
+legend('\omega_{x}', '\omega_{y}', '\omega_{z}', '\mu_{\omega_{x}}','\mu_{\omega_{y}}','\mu_{\omega_{z}}')
+grid on
+xlabel('time, seconds')
+ylabel('$\mathbf{\vec{\omega}}, \mathrm{\frac{rad}{s}}$', 'Interpreter', 'latex')
+title('$\mathbf{\vec{\omega}} \;\mathrm{over \;time}$', 'Interpreter', 'latex')
 hold off
 
