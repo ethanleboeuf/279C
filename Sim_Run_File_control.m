@@ -79,7 +79,8 @@ A_RW = [1 0 0 1/sqrt(3);0 1 0 1/sqrt(3);0 0 1 1/sqrt(3)];
 I_w = 2*eye(4); % Reaction wheels moments of inertia
 RW_err = 0.0001;
 RW_noise = mvnrnd(zeros(num_noise, 4), RW_err* eye(4))';
-
+lambda = 2.9;
 
 sim('SOHO_sim_UKF.slx')
-sim('SOHO_sim_vcontrol.slx')
+q_out_UKF = q_out;
+% sim('SOHO_sim_vcontrol.slx')

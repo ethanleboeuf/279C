@@ -1,0 +1,154 @@
+%% Sim_timing plots
+
+clear
+close all
+
+%% Script to Run the Sim
+
+sc = init_sc();
+sc = body_inertia_func(sc);
+Rot = sc.R;
+I_vec = [sc.Ip(1,1); sc.Ip(2,2); sc.Ip(3,3)];
+Ix_sat = I_vec(1);
+Iy_sat = I_vec(2);
+Iz_sat = I_vec(3);
+% Convert sc struct to arrays
+subsections = {'rect';'base';'fuel';'sp1';'sp2'};
+count = 1;
+for subsect = subsections'
+    faces = fieldnames(sc.(subsect{1}));
+    for face = faces'
+        areas(count) = sc.(subsect{1}).(face{1}).area;
+        bcs(count,:) = sc.(subsect{1}).(face{1}).bc;
+        normals(count,:) = sc.R * sc.(subsect{1}).(face{1}).normal;
+        count = count+1;
+    end
+end
+
+constants % access constants (mu, distance to earth, etc.)
+
+omega = (sqrt((mu.earth + mu.moon + mu.sun)/dis.sun^3));
+mu1 = 328900.56^-1; % From NASA
+r0 = [.98900883730044109; 0; 0.000802140914099732]*dis.sun;
+v0 = [0; 0.010697471710460349-2.895683e-3; 0] * dis.sun * omega;
+
+% w0 = [3; 2; 2.5] * pi()/180; % initial angular velocity
+% w0 = [omega/100 ; omega; omega/100];
+w0 = [1; 1; 1]*pi/180;
+
+% DCM =[.892539 .157379 -.422618; -.275451 0.932257 -.234570; .357073 0.325773 .875426];
+% DCM = sc.R'*[-1 0 0; 0 -1 0; 0 0 1];
+DCM = sc.R'*[-1 0 0; 0 -1 0; 0 0 1];
+% DCM = [0.999999671094767 0 -8.110550887097017e-04; 0 1 0; 8.110550887097016e-04 0 0.999999671094768];
+
+
+% Using this as a switch case parameter
+% 0 = deterministic att det
+% 1 = q method
+% 2 = angular velocity and kinematic equations
+att_det_method = 1;
+q0 = DCM_to_quat(DCM);
+acc_gyro_bias = 0.5 * pi/180 / 60 / 60; % 0.003 to 1 deg/hr (SMAD) - will need to make this bigger to see any change
+acc_gyro = 0.01 * pi/180 / 60 / 60; 
+sun_err_bias = 1 * pi/180; % 0.005 to 3 deg, sun sensor error (SMAD)
+sun_err_var = 0.01 * pi/180;
+star_err_bias = 0.001 * pi/180; % 0.0003 to 0.01 deg, star tracker error (SMAD)
+star_err_var = 0.0005 * pi/180;
+
+% sun_err_var = 1 * pi/180;
+% acc_gyro = 1 * pi/180 / 60 / 60; 
+% star_err_var = 1 * pi/180;
+
+
+%% Generate Random Noise and Run Sim
+
+% num_noise = ceil(end_time / 10);
+num_noise = 1000;
+sun_noise = mvnrnd(zeros(num_noise, 3), sun_err_var*eye(3))';
+star_noise = mvnrnd(zeros(num_noise, 3), star_err_var*eye(3))';
+gyro_noise = mvnrnd(zeros(num_noise, 3), acc_gyro* eye(3))';
+
+%% Control Constants
+% kp = 0.1 ^ 2 / Iy_sat;
+% kd = 2 * sqrt(Iy_sat * (1e-6 + kp));
+%% Actuator Model
+% 3 RW with x,y,z + 1 RW with trisectrix
+Astar_RW = [5/6 -1/6 -1/6;-1/6 5/6 -1/6;-1/6 -1/6 5/6;sqrt(3)/6 sqrt(3)/6 sqrt(3)/6];
+A_RW = [1 0 0 1/sqrt(3);0 1 0 1/sqrt(3);0 0 1 1/sqrt(3)];
+I_w = 2*eye(4); % Reaction wheels moments of inertia
+RW_err = 0.0001;
+RW_noise = mvnrnd(zeros(num_noise, 4), RW_err* eye(4))';
+% lambda_poss = [2 : .01 : 3];
+%% Running the Sim(s)
+lambda_poss = 2.92; % from iterating through
+
+end_time = 2000;
+dt = .25;
+dt_EKFs = [5];
+dt_UKFs = [5];
+
+err_mean = zeros(length(dt_UKFs),1);
+err_mean_EKF = zeros(length(dt_EKFs),1);
+% figure()
+% for ii = 1:length(dt_UKFs)
+for ii = 1:25
+    lambda = lambda_poss;
+    dt_UKF = dt_UKFs(1);
+    tic
+    sim('SOHO_sim_UKF.slx')
+    time_UKF(ii) = toc
+    q_out_UKF = q_out;
+    disp(dt_UKF)
+    mu_UKF(:, 1:4) = quat_corr(mu_UKF(:,1:4));
+    [q] = quat_corr(q_out(1:dt_UKF/dt:end, 1:4));
+    q = [q q_out(1:dt_UKF/dt:end, 5:7)];
+    err_temp = zeros(size(mu_UKF,1),1);
+%     for jj = 1:size(mu_UKF, 1)
+%         err_temp(jj) = norm(mu_UKF(jj, :) - q(jj, :));
+%         
+%     end
+%     if dt_UKF <= 31
+%         plot(t(1:dt_UKF/dt:end), err_temp, 'DisplayName', string([num2str(dt_UKF), ' s']))
+%     end
+%     hold on
+%     err_mean(ii) = mean(err_temp);
+end
+% xlabel('time, seconds')
+% ylabel('||mu - x_{truth}||')
+% legend
+% hold off
+
+% dt_EKF = dt_EKFs(1);
+% for ii = 1:length(dt_EKFs)
+for ii = 1:25
+    lambda = lambda_poss;
+    dt_EKF = dt_EKFs(1);
+    tic
+    sim('SOHO_sim_EKF.slx')
+    time_EKF(ii) = toc
+    q_out_EKF = q_out;
+    disp(dt_EKF)
+    mu_EKF(:, 1:4) = quat_corr(mu_EKF(:,1:4));
+    [q] = quat_corr(q_out(1:dt_EKF/dt:end, 1:4));
+    q = [q q_out(1:dt_EKF/dt:end, 5:7)];
+    err_temp_EKF = zeros(size(mu_EKF,1),1);
+    for jj = 1:size(mu_EKF, 1)
+        err_temp_EKF(jj) = norm(mu_EKF(jj, :) - q(jj, :));
+    end
+    err_mean_EKF(ii) = mean(err_temp_EKF);
+end
+
+figure()
+plot(dt_EKFs, err_mean_EKF, dt_UKFs, err_mean)
+hold on
+xlabel('dt step')
+ylabel('Mean Error to Ground Trurth')
+title('Mean Error vs. dt')
+legend('EKF', 'UKF')
+hold off
+
+
+% tic
+% sim('SOHO_sim_EKF.slx')
+% toc
+% q_out_EKF = q_out;
