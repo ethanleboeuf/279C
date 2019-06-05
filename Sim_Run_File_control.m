@@ -85,5 +85,5 @@ th_noise = mvnrnd(zeros(num_noise, 4), th_err* eye(4))';
 act_flag = 3; % determine which actuator to use (1 - RW, 2 - thruster, 3 - RW + thruster)
 
 
-sim('SOHO_sim_EKF.slx')
+sim('SOHO_sim_EKF_TD.slx')
 % sim('SOHO_sim_vcontrol.slx')
