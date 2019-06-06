@@ -116,3 +116,4 @@ ylabel('$\mathbf{\vec{\omega}}, \mathrm{\frac{rad}{s}}$', 'Interpreter', 'latex'
 title('$\mathbf{\vec{\omega}} \;\mathrm{over \;time}$', 'Interpreter', 'latex')
 hold off
 
+

@@ -62,14 +62,43 @@ hold off
 % plot(t, q_out(:, 7))
 
 figure()
-plot(t, abs(q_out(:, 1)), t, abs(q_out(:, 2)), t, abs(q_out(:, 3)), t, abs(q_out(:, 4)))
+subplot(4, 1, 1)
+plot(t, abs(q_out(:, 1)))
 hold on
-plot(t, abs(q_nom(:, 1)), 'r',t,abs(q_nom(:, 2)), 'r',t, abs(q_nom(:, 3)), 'r',t, abs(q_nom(:, 4)), 'r')
-legend('q_{true1}','q_{true2}','q_{true3}','q_{true4}','q_{nom}')
-xlabel('time, seconds')
-ylabel('quaternion values')
-title('Ground Truth and Nominal Quaternions over Time')
+plot(t, abs(q_nom(:, 1)), 'r')
+ylabel('q_1')
 hold off
+
+subplot(4, 1, 2)
+plot(t, abs(q_out(:, 2)))
+hold on
+plot(t, abs(q_nom(:, 2)), 'r')
+ylabel('q_2')
+hold off
+
+subplot(4, 1, 3)
+plot(t, abs(q_out(:, 3)))
+hold on
+plot(t, abs(q_nom(:, 3)), 'r')
+ylabel('q_3')
+hold off
+
+subplot(4, 1, 4)
+plot(t, abs(q_out(:, 4)))
+hold on
+plot(t, abs(q_nom(:, 4)), 'r')
+xlabel('time, seconds')
+ylabel('q_4')
+hold off
+% 
+% plot(t, abs(q_out(:, 1)), t, abs(q_out(:, 2)), t, abs(q_out(:, 3)), t, abs(q_out(:, 4)))
+% hold on
+% plot(t, abs(q_nom(:, 1)), 'r',t,abs(q_nom(:, 2)), 'r',t, abs(q_nom(:, 3)), 'r',t, abs(q_nom(:, 4)), 'r')
+% legend('q_{true1}','q_{true2}','q_{true3}','q_{true4}','q_{nom}')
+% xlabel('time, seconds')
+% ylabel('quaternion values')
+sgtitle('{\color{blue}Ground Truth} and {\color{red}Nominal Quaternions} over Time', 'FontSize', 24)
+% hold off
 % axes_plot(DCM_err, sc)
 
 % t_plot = t(1:1000);

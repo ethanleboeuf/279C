@@ -74,20 +74,20 @@ hold off
 
 figure()
 % scatter([t; t(end)+dt], [NaN; mu_p(:, 4)], 'filled')
-scatter(t_UKF, [mu_p_UKF(:, 4)], 'filled')
+scatter(t_UKF, [mu_p_UKF(:, 2)], 'filled')
 hold on
 % scatter([t; t(end)+dt], [NaN; mu_UKF(:, 4)], 'filled')
-scatter(t_UKF, [mu_UKF(:, 4)], 'filled')
-plot(t, q(:, 4), 'k')
+scatter(t_UKF, [mu_UKF(:, 2)], 'filled')
+plot(t, q(:, 2), 'k')
 % plot(t, q_det(:, 4), 'b')
-plot(t_UKF, z_high4(1:end), 'b', 'HandleVisibility', 'off')
-plot(t_UKF, z_min4(1:end), 'b')
+plot(t_UKF, z_high2(1:end), 'b', 'HandleVisibility', 'off')
+plot(t_UKF, z_min2(1:end), 'b')
 % for ii = 1:size(z, 3)-1
 %     plot(z(1, :, ii) + t(ii+1), z(2, :, ii) + mu_UKF(ii,4))
 % end
 grid on
 xlabel('time, seconds')
-ylabel('q_4')
+ylabel('q_2')
 legend('Pre-fit', 'Post-fit', 'Ground Truth', '95% Confidence Bound')
 hold off
 
@@ -106,8 +106,13 @@ hold off
 % err_mean = [err_mean mean(abs(mu_UKF(1:end, 4) - q(1:dt_UKF/dt:end, 4)))];
 
 figure()
-plot(t, q_out(:, 5))
+plot(t, q_out(:, 5), 'k', t, q_out(:, 6), 'k', t, q_out(: ,7), 'k', 'LineWidth', 10)
 hold on
-% plot(t_UKF, mu_p_UKF(:, 5))
+plot(t_UKF, mu_UKF(:, 5),t_UKF, mu_UKF(:, 6), t_UKF, mu_UKF(:, 7))
+legend('\omega_{x}', '\omega_{y}', '\omega_{z}', '\mu_{\omega_{x}}','\mu_{\omega_{y}}','\mu_{\omega_{z}}')
+grid on
+xlabel('time, seconds')
+ylabel('$\mathbf{\vec{\omega}}, \mathrm{\frac{rad}{s}}$', 'Interpreter', 'latex')
+title('$\mathbf{\vec{\omega}} \;\mathrm{over \;time}$', 'Interpreter', 'latex')
 hold off
 
